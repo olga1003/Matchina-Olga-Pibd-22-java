@@ -2,38 +2,34 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.util.Set;
 
- 
 public abstract  class Train implements ITransport{
 
-	/// Левая координата отрисовки автомобиля
+	/// Г‹ГҐГўГ Гї ГЄГ®Г®Г°Г¤ГЁГ­Г ГІГ  Г®ГІГ°ГЁГ±Г®ГўГЄГЁ Г ГўГІГ®Г¬Г®ГЎГЁГ«Гї
 	static int _startPosX;
 
-	/// Правая кооридната отрисовки автомобиля
+	/// ГЏГ°Г ГўГ Гї ГЄГ®Г®Г°ГЁГ¤Г­Г ГІГ  Г®ГІГ°ГЁГ±Г®ГўГЄГЁ Г ГўГІГ®Г¬Г®ГЎГЁГ«Гї
 	static int _startPosY;
 
-	/// Ширина окна отрисовки
+	/// ГГЁГ°ГЁГ­Г  Г®ГЄГ­Г  Г®ГІГ°ГЁГ±Г®ГўГЄГЁ
 	protected static int _pictureWidth;
 
-	/// Высота окна отрисовки
+	/// Г‚Г»Г±Г®ГІГ  Г®ГЄГ­Г  Г®ГІГ°ГЁГ±Г®ГўГЄГЁ
 	protected static int _pictureHeight;
 
-	/// Ширина отрисовки автомобиля
+	/// ГГЁГ°ГЁГ­Г  Г®ГІГ°ГЁГ±Г®ГўГЄГЁ Г ГўГІГ®Г¬Г®ГЎГЁГ«Гї
 	private  static  int locoWidth = 100;
 
-	/// Ширина отрисовки автомобиля
+	/// ГГЁГ°ГЁГ­Г  Г®ГІГ°ГЁГ±Г®ГўГЄГЁ Г ГўГІГ®Г¬Г®ГЎГЁГ«Гї
 	private static int locoHeight = 60;
 
-	/// Максимальная скорость
+	/// ГЊГ ГЄГ±ГЁГ¬Г Г«ГјГ­Г Гї Г±ГЄГ®Г°Г®Г±ГІГј
 	public  int MaxSpeed; {  Set get;}
 
-	/// Вес автомобиля
+	/// Г‚ГҐГ± Г ГўГІГ®Г¬Г®ГЎГЁГ«Гї
 	public  float Weight; { Set get;}
 
-	/// Основной цвет кузова
-	public static Color MainColor; { Set get;}
-
-	
-	
+	/// ГЋГ±Г­Г®ГўГ­Г®Г© Г¶ГўГҐГІ ГЄГіГ§Г®ГўГ 
+	public static Color MainColor; { Set get;}	
     public void SetPosition(int x, int y, int width, int height)
     {
         _startPosX = x;
@@ -43,5 +39,4 @@ public abstract  class Train implements ITransport{
     }
     public abstract void DrawTrain(Graphics g);
     public abstract void MoveTransport(Direction direction);
-
 }
