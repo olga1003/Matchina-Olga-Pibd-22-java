@@ -2,29 +2,20 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 public  class LocoWagonForm2   implements IWagon{
-	
- 
+
 	@Override
 	public void draw(Number number, Graphics g,  int x ,int y)
 	{
-		drawWagon(g,x,y); 
-		 
+		drawWagon(g,x,y);  
 		if(number == Number.Two || number == Number.Three) {
-	
 			drawWagon(g,x+80,y);           
 		}
 		if(number == Number.Three) {		  
-  	
 			drawWagon(g,x+160,y);
-		}
-	 
-		
+		}		
 	}		
-	
-
 	public  void drawWagon(Graphics g, int x,int y) {
 			g.setColor(Color.BLUE);
-
 			g.fillOval( x + 100, y + 18, 70, 40);
 			g.setColor(Color.WHITE);
 			g.fillRect( x + 110, y + 30, 20, 10);
@@ -40,5 +31,3 @@ public  class LocoWagonForm2   implements IWagon{
 			g.fillOval(  x + 147, y + 50, 15, 15);
 	}
 }
-
-
