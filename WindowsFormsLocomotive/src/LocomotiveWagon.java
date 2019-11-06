@@ -1,12 +1,7 @@
 import java.awt.Color;
 import java.awt.Graphics;
 import java.util.Random;
-enum Number
-{
-	One,
-	Two,
-	Three
-}
+
 public class LocomotiveWagon {
 
 	public static void NumberWagon(Number number, Graphics g,  int x ,int y)

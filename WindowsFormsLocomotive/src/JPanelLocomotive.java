@@ -4,10 +4,10 @@ import java.util.Random;
 import javax.swing.JPanel;
 
 public class JPanelLocomotive extends JPanel {
-
-	private static LocomotiveWagon wagon;	
+	
 	public JPanelLocomotive(TrainLocomotive array) {		
 	}
+
 	public JPanelLocomotive(LocomotiveWagon array) {		
 	}
 

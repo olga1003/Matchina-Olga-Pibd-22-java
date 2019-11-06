@@ -8,8 +8,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.BevelBorder;
 import java.awt.Color;
-public class FormLocomotive {
 
+public class FormLocomotive {
 	private JFrame frame;
 	private TrainLocomotive locomotive;
 	private JPanel panel;
@@ -18,7 +18,6 @@ public class FormLocomotive {
 	private JButton buttonDown;
 	private JButton buttonLeft;
 	private JButton buttonRight;
-
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -32,7 +31,6 @@ public class FormLocomotive {
 			}
 		});
 	}
-
 	public FormLocomotive() {
 		initialize();
 	}
@@ -41,7 +39,7 @@ public class FormLocomotive {
 		frame.setBounds(100, 100, 762, 483);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
-
+		 
 		start = new JButton("C\u043E\u0437\u0434\u0430\u0442\u044C");
 		start.setBounds(598, 322, 106, 25);
 		frame.getContentPane().add(start);
