@@ -3,20 +3,12 @@ import java.awt.Graphics;
 import java.util.Random;
 
 public class LocoTrain extends Train {
-	/// Ширина отрисовки автомобиля
+	/// ГГЁГ°ГЁГ­Г  Г®ГІГ°ГЁГ±Г®ГўГЄГЁ Г ГўГІГ®Г¬Г®ГЎГЁГ«Гї
 	private  static  int locoWidth = 100;
 
-	/// Ширина отрисовки автомобиля
+	/// ГГЁГ°ГЁГ­Г  Г®ГІГ°ГЁГ±Г®ГўГЄГЁ Г ГўГІГ®Г¬Г®ГЎГЁГ«Гї
 	private static int locoHeight = 60;
-
-    /// <summary>
-    /// Конструктор
-    /// </summary>
-    /// <param name="maxSpeed">Максимальная скорость</param>
-    /// <param name="weight">Вес автомобиля</param>
-    /// <param name="mainColor">Основной цвет кузова</param>
 	int design;
-
     public LocoTrain(int maxSpeed, float weight, Color mainColor) {
         this.MaxSpeed = maxSpeed;
         this.Weight = weight;
@@ -24,35 +16,33 @@ public class LocoTrain extends Train {
         Random rnd =new Random();
         design=rnd.nextInt(3)+1;
 	}
- 
-//@Override
 	public  void MoveTransport(Direction direction)
-    {
+        {
         float step = MaxSpeed * 100 / Weight;
         switch (direction)
         {
-            // вправо
+            // ГўГЇГ°Г ГўГ®
             case Right:
                 if (_startPosX + step < _pictureWidth - locoWidth)
                 {
                     _startPosX += step;
                 }
                 break;
-            //влево
+            //ГўГ«ГҐГўГ®
             case Left:
                 if (_startPosX - step > 0)
                 {
                     _startPosX -= step;
                 }
                 break;
-            //вверх
+            //ГўГўГҐГ°Гµ
             case Up:
                 if (_startPosY - step > 0)
                 {
                     _startPosY -= step;
                 }
                 break;
-            //вниз
+            //ГўГ­ГЁГ§
             case Down:
                 if (_startPosY + step < _pictureHeight - locoHeight)
                 {
@@ -74,14 +64,9 @@ public class LocoTrain extends Train {
 		case 3:
 			new LocoWagonForm3().draw(Number.Three,g, _startPosX, _startPosY);
 			break;
-		}
-    	
-    	
-    	g.setColor(Color.BLACK);
-
-
+		}      	
+    		g.setColor(Color.BLACK);
 		g.fillRect( _startPosX + 43, _startPosY + 30, 7, 10);
-
 		g.fillRect( _startPosX + 20, _startPosY + 55, 70, 7);
 
 		g.setColor(MainColor);
@@ -101,6 +86,4 @@ public class LocoTrain extends Train {
 		g.fillOval(  _startPosX + 48, _startPosY + 50, 15, 15);
 		g.fillOval(  _startPosX + 68, _startPosY + 50, 15, 15);
     }
-	
-
 }
