@@ -2,27 +2,22 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.util.Random;
 
-public   class LocomotiveWagon   implements IWagon{
-	
-	//@Override
-	public void draw(Number number, Graphics g,  int x ,int y)
+public class LocomotiveWagon {
+
+	public  void NumberWagon(Number number, Graphics g,  int x ,int y)
 	{
+		DrawWagon(g,x,y); 
 		
-		drawWagon(g,x,y); 
-	 
 		if(number == Number.Two || number == Number.Three) {
 	
-			drawWagon(g,x+80,y);           
+			DrawWagon(g,x+80,y);           
 		}
 		if(number == Number.Three) {		  
   	
-			drawWagon(g,x+160,y);
+			DrawWagon(g,x+160,y);
 		}
-	 
-		
-	}		
-		
-	public void drawWagon(Graphics g, int x,int y) {
+	}
+	public  void DrawWagon(Graphics g, int x,int y) {
 		g.setColor(Color.BLUE);
 
 		g.fillRect( x + 100, y + 20, 70, 35);
@@ -38,6 +33,5 @@ public   class LocomotiveWagon   implements IWagon{
 		g.fillOval(  x + 107, y + 50, 15, 15);
 		g.fillOval(  x + 127, y + 50, 15, 15);
 		g.fillOval(  x + 147, y + 50, 15, 15);
-		
 	}
 }
