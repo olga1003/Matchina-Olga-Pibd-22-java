@@ -16,7 +16,6 @@ public class FormLocomotive {
 	private JButton buttonRight;
 	TrainLocomotive transpotr;
 
-
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {

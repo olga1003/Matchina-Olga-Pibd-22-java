@@ -1,6 +1,4 @@
 import java.awt.Graphics;
-import java.util.Random;
-
 import javax.swing.JPanel;
 
 public class JPanelLocomotive extends JPanel {
