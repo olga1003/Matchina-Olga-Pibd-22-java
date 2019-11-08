@@ -1,23 +1,20 @@
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Random;
-import java.lang.Enum;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 import javax.swing.border.BevelBorder;
 import java.awt.Color;
 
 public class FormLocomotive {
 	private JFrame frame;
-	private TrainLocomotive locomotive;
-	private JPanel panel;
+	private JPanelLocomotive panel;
 	private JButton start;
 	private JButton buttonUp;
 	private JButton buttonDown;
 	private JButton buttonLeft;
 	private JButton buttonRight;
+	TrainLocomotive transpotr;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -45,13 +42,15 @@ public class FormLocomotive {
 		frame.getContentPane().add(start);
 		start.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				locomotive = new TrainLocomotive( 100, 1000 , Color.BLUE, Color.BLACK, true, true);
-				locomotive.SetPosition(100, 100, 550, 400);
-				panel = new JPanelLocomotive(locomotive);
+				transpotr = new TrainLocomotive( 100, 1000 , Color.BLUE, Color.BLACK, true, true);
+				transpotr.SetPosition(100, 100, 550, 400);
+				panel = new JPanelLocomotive();
 				panel.setBorder(new BevelBorder(BevelBorder.LOWERED, 
 						null, null, null, null));
 				panel.setBounds(10, 11, 551, 414);
 				frame.getContentPane().add(panel);
+				
+				panel.drawLocomotive(transpotr);
 				panel.repaint();
 			}
 		});
@@ -59,7 +58,8 @@ public class FormLocomotive {
 		buttonUp = new JButton("^");
 		buttonUp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				locomotive.MoveTransport(Direction.Up);
+				transpotr.MoveTransport(Direction.Up);
+				panel.drawLocomotive(transpotr);
 				panel.repaint();
 			}
 		});
@@ -69,7 +69,8 @@ public class FormLocomotive {
 		buttonDown = new JButton("v");
 		buttonDown.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				locomotive.MoveTransport(Direction.Down);
+				transpotr.MoveTransport(Direction.Down);
+				panel.drawLocomotive(transpotr);
 				panel.repaint();
 			}
 		});
@@ -79,7 +80,8 @@ public class FormLocomotive {
 		buttonLeft = new JButton("<");
 		buttonLeft.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				locomotive.MoveTransport(Direction.Left);
+				transpotr.MoveTransport(Direction.Left);
+				panel.drawLocomotive(transpotr);
 				panel.repaint();	
 			}
 		});
@@ -89,7 +91,8 @@ public class FormLocomotive {
 		buttonRight = new JButton(">");
 		buttonRight.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				locomotive.MoveTransport(Direction.Right);
+				transpotr.MoveTransport(Direction.Right);
+				panel.drawLocomotive(transpotr);
 				panel.repaint();				
 			}
 		});

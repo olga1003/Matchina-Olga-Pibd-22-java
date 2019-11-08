@@ -6,22 +6,22 @@ import java.lang.Enum;
 public class TrainLocomotive {
 
 	/// Левая координата отрисовки автомобиля
-	static int _startPosX;
+	 int _startPosX;
 
 	/// Правая кооридната отрисовки автомобиля
-	static int _startPosY;
+	 int _startPosY;
 
 	/// Ширина окна отрисовки
-	private static int _pictureWidth;
+	private  int _pictureWidth;
 
 	/// Высота окна отрисовки
-	private  static int _pictureHeight;
+	private   int _pictureHeight;
 
 	/// Ширина отрисовки автомобиля
-	private  static  int locoWidth = 100;
+	private    int locoWidth = 100;
 
 	/// Ширина отрисовки автомобиля
-	private static int locoHeight = 60;
+	private  int locoHeight = 60;
 
 	/// Максимальная скорость
 	public  int MaxSpeed; {  Set get;}
@@ -30,16 +30,16 @@ public class TrainLocomotive {
 	public  float Weight; { Set get;}
 
 	/// Основной цвет кузова
-	public  static Color MainColor; { Set get;}
+	public   Color MainColor; { Set get;}
 
 	/// Дополнительный цвет
-	public static Color DopColor; { Set get;}
+	public  Color DopColor; { Set get;}
 
 	/// Признак наличия трубы
-	public static boolean Steam; { Set get;}
+	public  boolean Steam; { Set get;}
 
 	/// Признак наличия угля
-	public static boolean Coal; { Set get;}
+	public  boolean Coal; { Set get;}
 
 	public TrainLocomotive(int maxSpeed, float weight, Color mainColor, Color dopColor,
 			boolean steam, boolean coal)
@@ -94,8 +94,23 @@ public class TrainLocomotive {
                 break;
         }
     }
-	public static void DrawCar(Graphics g)
+	final  Random random = new Random();
+	int number = random.nextInt(3)+1;
+	
+	public  void DrawTrain(Graphics g)
 	{		
+		switch (number)
+		{
+		case 1:
+			new LocomotiveWagon().NumberWagon(Number.One,g, _startPosX, _startPosY);
+			break;
+		case 2:
+			new LocomotiveWagon().NumberWagon(Number.Two, g, _startPosX,_startPosY);
+			break;
+		case 3:
+			new LocomotiveWagon().NumberWagon(Number.Three, g, _startPosX,_startPosY);
+			break;          
+		}
 		if (Coal)
 		{
 			g.setColor(DopColor);

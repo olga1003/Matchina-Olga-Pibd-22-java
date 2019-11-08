@@ -1,10 +1,9 @@
 import java.awt.Color;
 import java.awt.Graphics;
-import java.util.Random;
 
 public class LocomotiveWagon {
 
-	public static void NumberWagon(Number number, Graphics g,  int x ,int y)
+	public  void NumberWagon(Number number, Graphics g,  int x ,int y)
 	{
 		DrawWagon(g,x,y); 
 		
@@ -17,7 +16,7 @@ public class LocomotiveWagon {
 			DrawWagon(g,x+160,y);
 		}
 	}
-	public static void DrawWagon(Graphics g, int x,int y) {
+	public  void DrawWagon(Graphics g, int x,int y) {
 		g.setColor(Color.BLUE);
 
 		g.fillRect( x + 100, y + 20, 70, 35);
@@ -35,3 +34,4 @@ public class LocomotiveWagon {
 		g.fillOval(  x + 147, y + 50, 15, 15);
 	}
 }
+
