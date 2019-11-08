@@ -1,14 +1,15 @@
 import java.awt.Graphics;
+import java.util.Random;
 import javax.swing.JPanel;
 
 public class JPanelLocomotive extends JPanel {
-	TrainLocomotive transpotr;
-	public void  drawLocomotive(TrainLocomotive transpotr) {		
-		this.transpotr = transpotr;
-	}
+	ITransport transport;
 
-	public void paint(Graphics g)  {		
+	public JPanelLocomotive(ITransport transpotr) {	
+		this.transport = transpotr;
+	}
+	public void paint(Graphics g)  {
 		super.paint(g);		
-		transpotr.DrawCar(g);
+		transport.DrawTrain(g);
 	}
 }

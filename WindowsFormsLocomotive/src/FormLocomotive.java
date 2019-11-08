@@ -3,18 +3,20 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 import javax.swing.border.BevelBorder;
 import java.awt.Color;
 
 public class FormLocomotive {
+
 	private JFrame frame;
-	private JPanelLocomotive panel;
+	private ITransport locomotive;
+	private JPanel panel;
 	private JButton start;
 	private JButton buttonUp;
 	private JButton buttonDown;
 	private JButton buttonLeft;
 	private JButton buttonRight;
-	TrainLocomotive transpotr;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -28,38 +30,53 @@ public class FormLocomotive {
 			}
 		});
 	}
+
 	public FormLocomotive() {
 		initialize();
 	}
+
 	private void initialize() {
 		frame = new JFrame();
 		frame.setBounds(100, 100, 762, 483);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
-		 
+			 
 		start = new JButton("C\u043E\u0437\u0434\u0430\u0442\u044C");
 		start.setBounds(598, 322, 106, 25);
 		frame.getContentPane().add(start);
 		start.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				transpotr = new TrainLocomotive( 100, 1000 , Color.BLUE, Color.BLACK, true, true);
-				transpotr.SetPosition(100, 100, 550, 400);
-				panel = new JPanelLocomotive();
+				locomotive =  new LocoTrain( 100, 1000 , Color.BLUE);
+				locomotive.SetPosition(100, 100, 550, 400);
+				panel = new JPanelLocomotive(locomotive);
 				panel.setBorder(new BevelBorder(BevelBorder.LOWERED, 
 						null, null, null, null));
 				panel.setBounds(10, 11, 551, 414);
 				frame.getContentPane().add(panel);
-				
-				panel.drawLocomotive(transpotr);
 				panel.repaint();
 			}
 		});
+		
+		JButton ButtonCreateLocoTrain = new JButton("\u0421\u043E\u0437\u0434\u0430\u0442\u044C \u0442\u0435\u043F\u043B\u043E\u0432\u043E\u0437");
+		ButtonCreateLocoTrain.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				locomotive = new TrainLocomotive(100,1000, Color.BLUE,Color.BLACK,  true, true);
+				locomotive.SetPosition(100, 100, 550, 400);
+				panel = new JPanelLocomotive(locomotive);
+				panel.setBorder(new BevelBorder(BevelBorder.LOWERED, 
+						null, null, null, null));
+				panel.setBounds(10, 11, 551, 414);
+				frame.getContentPane().add(panel);
+				panel.repaint();
+			}
+		});
+		ButtonCreateLocoTrain.setBounds(569, 284, 163, 25);
+		frame.getContentPane().add(ButtonCreateLocoTrain);
 
 		buttonUp = new JButton("^");
 		buttonUp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				transpotr.MoveTransport(Direction.Up);
-				panel.drawLocomotive(transpotr);
+				locomotive.MoveTransport(Direction.Up);
 				panel.repaint();
 			}
 		});
@@ -69,8 +86,7 @@ public class FormLocomotive {
 		buttonDown = new JButton("v");
 		buttonDown.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				transpotr.MoveTransport(Direction.Down);
-				panel.drawLocomotive(transpotr);
+				locomotive.MoveTransport(Direction.Down);
 				panel.repaint();
 			}
 		});
@@ -80,8 +96,7 @@ public class FormLocomotive {
 		buttonLeft = new JButton("<");
 		buttonLeft.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				transpotr.MoveTransport(Direction.Left);
-				panel.drawLocomotive(transpotr);
+				locomotive.MoveTransport(Direction.Left);
 				panel.repaint();	
 			}
 		});
@@ -91,8 +106,7 @@ public class FormLocomotive {
 		buttonRight = new JButton(">");
 		buttonRight.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				transpotr.MoveTransport(Direction.Right);
-				panel.drawLocomotive(transpotr);
+				locomotive.MoveTransport(Direction.Right);
 				panel.repaint();				
 			}
 		});
