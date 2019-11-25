@@ -3,10 +3,7 @@ import java.awt.Graphics;
 import java.util.Random;
 
 public class LocoTrain extends Train {
-	/// Ширина отрисовки автомобиля
 	private   int locoWidth = 100;
-
-	/// Ширина отрисовки автомобиля
 	private  int locoHeight = 60;
 	int design;
     public LocoTrain(int maxSpeed, float weight, Color mainColor) {

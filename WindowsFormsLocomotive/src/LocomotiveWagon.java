@@ -3,7 +3,6 @@ import java.awt.Graphics;
 import java.util.Random;
 
 public   class LocomotiveWagon   implements IWagon{
-	//@Override
 	public void draw(Number number, Graphics g,  int x ,int y)
 	{
 		drawWagon(g,x,y); 
@@ -31,6 +30,5 @@ public   class LocomotiveWagon   implements IWagon{
 		g.fillOval(  x + 107, y + 50, 15, 15);
 		g.fillOval(  x + 127, y + 50, 15, 15);
 		g.fillOval(  x + 147, y + 50, 15, 15);
-		
 	}
 }

@@ -31,5 +31,3 @@ public  class LocoWagonForm2   implements IWagon{
 			g.fillOval(  x + 147, y + 50, 15, 15);
 	}
 }
-
-

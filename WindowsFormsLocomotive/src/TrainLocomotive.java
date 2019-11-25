@@ -1,17 +1,10 @@
 import java.awt.Color;
 import java.util.*;
 import java.awt.Graphics;
-import java.lang.Enum;
 
 public class TrainLocomotive extends LocoTrain {
-
-	/// Дополнительный цвет
 	public  Color DopColor; { Set get;}
-
-	/// Признак наличия трубы
 	public  boolean Steam; { Set get;}
-
-	/// Признак наличия угля
 	public  boolean Coal;
 
 	public TrainLocomotive(int maxSpeed, float weight, Color mainColor, Color dopColor,
@@ -41,4 +34,3 @@ public class TrainLocomotive extends LocoTrain {
 		super.DrawTrain(g);   
 	}
 }
-

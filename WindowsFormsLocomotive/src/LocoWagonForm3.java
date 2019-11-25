@@ -14,8 +14,6 @@ public  class LocoWagonForm3 implements IWagon{
 		}
 	}		
 	public  void drawWagon(Graphics g, int x,int y) {
-
-
 		g.setColor(Color.BLUE);
 		g.fillRect( x + 100, y + 40, 70, 15);
 		g.fillOval( x + 105, y + 20, 30, 30);
