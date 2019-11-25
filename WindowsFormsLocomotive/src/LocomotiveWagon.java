@@ -1,9 +1,7 @@
 import java.awt.Color;
 import java.awt.Graphics;
-import java.util.Random;
 
 public   class LocomotiveWagon   implements IWagon{
-	//@Override
 	public void draw(Number number, Graphics g,  int x ,int y)
 	{
 		drawWagon(g,x,y); 
@@ -17,7 +15,6 @@ public   class LocomotiveWagon   implements IWagon{
 		
 	public void drawWagon(Graphics g, int x,int y) {
 		g.setColor(Color.BLUE);
-
 		g.fillRect( x + 100, y + 20, 70, 35);
 		g.setColor(Color.WHITE);
 		g.fillRect( x + 110, y + 30, 20, 10);
@@ -30,7 +27,7 @@ public   class LocomotiveWagon   implements IWagon{
 		g.setColor(Color.DARK_GRAY);
 		g.fillOval(  x + 107, y + 50, 15, 15);
 		g.fillOval(  x + 127, y + 50, 15, 15);
-		g.fillOval(  x + 147, y + 50, 15, 15);
-		
+		g.fillOval(  x + 147, y + 50, 15, 15);	
 	}
 }
+

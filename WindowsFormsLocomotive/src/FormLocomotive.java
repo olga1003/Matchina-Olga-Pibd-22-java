@@ -3,7 +3,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 import javax.swing.border.BevelBorder;
 import java.awt.Color;
 
@@ -17,6 +16,7 @@ public class FormLocomotive {
 	private JButton buttonDown;
 	private JButton buttonLeft;
 	private JButton buttonRight;
+	TrainLocomotive transpotr;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -67,6 +67,8 @@ public class FormLocomotive {
 						null, null, null, null));
 				panel.setBounds(10, 11, 551, 414);
 				frame.getContentPane().add(panel);
+				
+				panel.drawLocomotive(transpotr);
 				panel.repaint();
 			}
 		});
@@ -76,7 +78,8 @@ public class FormLocomotive {
 		buttonUp = new JButton("^");
 		buttonUp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				locomotive.MoveTransport(Direction.Up);
+				transpotr.MoveTransport(Direction.Up);
+				panel.drawLocomotive(transpotr);
 				panel.repaint();
 			}
 		});
@@ -86,7 +89,8 @@ public class FormLocomotive {
 		buttonDown = new JButton("v");
 		buttonDown.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				locomotive.MoveTransport(Direction.Down);
+				transpotr.MoveTransport(Direction.Down);
+				panel.drawLocomotive(transpotr);
 				panel.repaint();
 			}
 		});
@@ -96,7 +100,8 @@ public class FormLocomotive {
 		buttonLeft = new JButton("<");
 		buttonLeft.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				locomotive.MoveTransport(Direction.Left);
+				transpotr.MoveTransport(Direction.Left);
+				panel.drawLocomotive(transpotr);
 				panel.repaint();	
 			}
 		});
@@ -106,7 +111,8 @@ public class FormLocomotive {
 		buttonRight = new JButton(">");
 		buttonRight.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				locomotive.MoveTransport(Direction.Right);
+				transpotr.MoveTransport(Direction.Right);
+				panel.drawLocomotive(transpotr);
 				panel.repaint();				
 			}
 		});
