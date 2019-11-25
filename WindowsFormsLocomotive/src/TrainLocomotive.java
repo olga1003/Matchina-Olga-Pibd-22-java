@@ -1,11 +1,10 @@
 import java.awt.Color;
 import java.util.*;
 import java.awt.Graphics;
-
 public class TrainLocomotive extends LocoTrain {
 	public  Color DopColor; { Set get;}
 	public  boolean Steam; { Set get;}
-	public  boolean Coal;
+	public  boolean Coal; { Set get;}
 
 	public TrainLocomotive(int maxSpeed, float weight, Color mainColor, Color dopColor,
 			boolean steam, boolean coal) {
@@ -14,9 +13,9 @@ public class TrainLocomotive extends LocoTrain {
 		this.Steam = steam;
 		this.Coal = coal;
 	}
-	@Override
-	public  void  DrawTrain(Graphics g)
-	{	
+	@Override	
+	public  void DrawTrain(Graphics g)
+	{		
 		if (Coal)
 		{
 			g.setColor(DopColor);
