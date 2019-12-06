@@ -1,17 +1,20 @@
 import java.awt.Color;
 import java.util.*;
 import java.awt.Graphics;
+import java.lang.Enum;
 public class TrainLocomotive extends LocoTrain {
 	public  Color DopColor; { Set get;}
 	public  boolean Steam; { Set get;}
 	public  boolean Coal; { Set get;}
-
-	public TrainLocomotive(int maxSpeed, float weight, Color mainColor, Color dopColor,
+	private Number number;
+	IWagon wagon;
+	public TrainLocomotive(int maxSpeed, int weight,Number number, Color mainColor, Color dopColor,
 			boolean steam, boolean coal) {
-		super(maxSpeed, weight, mainColor);
+		super(maxSpeed, weight, mainColor, dopColor);
 		this.DopColor = dopColor;
 		this.Steam = steam;
 		this.Coal = coal;
+		this.number = number;
 	}
 
 	@Override	
