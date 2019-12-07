@@ -54,13 +54,13 @@ public class LocoTrain extends Train {
 	{
     	switch (design) {
 		case 1:
-			new LocomotiveWagon().draw(Number.One,g, _startPosX, _startPosY);
+			new LocomotiveWagonFormNormal().draw(Number.One,g, _startPosX, _startPosY);
 			break;
 		case 2:
-			new LocoWagonForm2().draw(Number.Two,g, _startPosX, _startPosY);
+			new LocoWagonFormOval().draw(Number.Two,g, _startPosX, _startPosY);
 			break;
 		case 3:
-			new LocoWagonForm3().draw(Number.Three,g, _startPosX, _startPosY);
+			new LocoWagonFormВoubleOval().draw(Number.Three,g, _startPosX, _startPosY);
 			break;
 		}	
     	g.setColor(Color.BLACK);
