@@ -60,7 +60,7 @@ public class LocoTrain extends Train {
 			new LocoWagonFormOval().draw(Number.Two,g, _startPosX, _startPosY);
 			break;
 		case 3:
-			new LocoWagonFormВoubleOval().draw(Number.Three,g, _startPosX, _startPosY);
+			new LocoWagonFormDoubleOval().draw(Number.Three,g, _startPosX, _startPosY);
 			break;
 		}	
     	g.setColor(Color.BLACK);

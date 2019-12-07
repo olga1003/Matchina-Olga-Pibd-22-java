@@ -1,6 +1,6 @@
 import java.awt.Color;
 import java.awt.Graphics;
-public  class LocoWagonFormÂoubleOval implements IWagon{ 
+public  class LocoWagonFormDoubleOval implements IWagon{ 
 	@Override
 	public void draw(Number number, Graphics g,  int x ,int y)
 	{
