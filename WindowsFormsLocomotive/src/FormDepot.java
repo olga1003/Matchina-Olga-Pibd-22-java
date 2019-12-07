@@ -66,13 +66,13 @@ public class FormDepot {
 					Random rnd = new Random();
 					switch (rnd.nextInt(3)) {
 					case 0:
-						wagon = new LocomotiveWagon();
+						wagon = new LocomotiveWagonFormNormal();
 						break;
 					case 1:
-						wagon = new LocoWagonForm2();
+						wagon = new LocoWagonFormOval();
 						break;
 					case 2:
-						wagon = new LocoWagonForm3();
+						wagon = new LocoWagonFormDoubleOval();
 						break;
 					}
 					int place = depot.addTrain(transport, wagon);
@@ -94,13 +94,13 @@ public class FormDepot {
 						Random rnd = new Random();
 						switch (rnd.nextInt(3)) {
 						case 0:
-							wagon = new LocomotiveWagon();
+							wagon = new LocomotiveWagonFormNormal();
 							break;
 						case 1:
-							wagon = new LocoWagonForm2();
+							wagon = new LocoWagonFormOval();
 							break;
 						case 2:
-							wagon = new LocoWagonForm3();
+							wagon = new LocoWagonFormDoubleOval();
 							break;
 						}
 						int place = depot.addTrain(transport, wagon);

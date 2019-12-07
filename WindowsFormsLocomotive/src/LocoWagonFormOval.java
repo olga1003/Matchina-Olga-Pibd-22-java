@@ -1,7 +1,7 @@
 import java.awt.Color;
 import java.awt.Graphics;
 
-public  class LocoWagonForm2   implements IWagon{
+public  class LocoWagonFormOval   implements IWagon{
 	private int positionX;
 	private int positionY;
 	public int PositionX() {
