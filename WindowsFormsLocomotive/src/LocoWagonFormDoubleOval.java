@@ -1,25 +1,22 @@
 import java.awt.Color;
 import java.awt.Graphics;
-
-public class LocomotiveWagon {
-
-	public  void NumberWagon(Number number, Graphics g,  int x ,int y)
+public  class LocoWagonFormDoubleOval implements IWagon{ 
+	@Override
+	public void draw(Number number, Graphics g,  int x ,int y)
 	{
-		DrawWagon(g,x,y); 
-		
+		drawWagon(g,x,y); 
 		if(number == Number.Two || number == Number.Three) {
-	
-			DrawWagon(g,x+80,y);           
+			drawWagon(g,x+80,y);           
 		}
 		if(number == Number.Three) {		  
-  	
-			DrawWagon(g,x+160,y);
+			drawWagon(g,x+160,y);
 		}
-	}
-	public  void DrawWagon(Graphics g, int x,int y) {
+	}		
+	public  void drawWagon(Graphics g, int x,int y) {
 		g.setColor(Color.BLUE);
-
-		g.fillRect( x + 100, y + 20, 70, 35);
+		g.fillRect( x + 100, y + 40, 70, 15);
+		g.fillOval( x + 105, y + 20, 30, 30);
+		g.fillOval( x + 135, y + 20, 30, 30);
 		g.setColor(Color.WHITE);
 		g.fillRect( x + 110, y + 30, 20, 10);
 		g.fillRect( x + 140, y + 30, 20, 10);
@@ -34,4 +31,3 @@ public class LocomotiveWagon {
 		g.fillOval(  x + 147, y + 50, 15, 15);
 	}
 }
-
