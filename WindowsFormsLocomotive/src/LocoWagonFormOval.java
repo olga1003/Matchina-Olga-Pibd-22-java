@@ -15,14 +15,16 @@ public  class LocoWagonFormOval   implements IWagon{
 		this.positionX = positionX;
 		this.positionY = positionY;
 	}
+	@Override
 	public void draw(Graphics g,  int x ,int y,Color mainColor)
 	{
 		drawWagon(g,x,y,mainColor); 	
 		drawWagon(g,x+80,y,mainColor);           
 		drawWagon(g,x+160,y,mainColor);	
 	}		
-	public void drawWagon(Graphics g, int x,int y,Color mainColor) {
+	public  void drawWagon(Graphics g, int x,int y,Color mainColor) {
 			g.setColor(mainColor);
+    
 			g.fillOval( x + 100, y + 18, 70, 40);
 			g.setColor(Color.WHITE);
 			g.fillRect( x + 110, y + 30, 20, 10);
