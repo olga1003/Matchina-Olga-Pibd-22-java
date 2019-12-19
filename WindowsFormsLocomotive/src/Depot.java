@@ -11,9 +11,6 @@ public class Depot<T extends ITransport, W extends IWagon> {
 	private final int placeSizeWidth = 400;
 	private final int placeSizeHeight = 80;
 	int maxCount;
-	public T getPlace(int i) {
-		return places.get(i);
-	}
 
 	public Depot(int sizes, int pictureWidth, int pictureHeight)
 	{
@@ -100,11 +97,11 @@ public class Depot<T extends ITransport, W extends IWagon> {
 	private void DrawMarking(Graphics g)
 	{
 		g.setColor(Color.BLACK); 
-		//границы праковки
+		//ГЈГ°Г Г­ГЁГ¶Г» ГЇГ°Г ГЄГ®ГўГЄГЁ
 		for (int i = 0; i < maxCount / 5; i++)             
-		{//отрисовываем, по 5 мест на линии
+		{//Г®ГІГ°ГЁГ±Г®ГўГ»ГўГ ГҐГ¬, ГЇГ® 5 Г¬ГҐГ±ГІ Г­Г  Г«ГЁГ­ГЁГЁ
 			for (int j = 0; j < 5; ++j)
-			{//линия рамзетки места
+			{//Г«ГЁГ­ГЁГї Г°Г Г¬Г§ГҐГІГЄГЁ Г¬ГҐГ±ГІГ 
 				g.drawLine(i * placeSizeWidth, j * placeSizeHeight+100,
 						i * placeSizeWidth + 1000, j * placeSizeHeight+100);
 				g.drawLine(i * placeSizeWidth, j * placeSizeHeight+110,
