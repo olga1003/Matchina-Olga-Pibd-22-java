@@ -2,7 +2,6 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.util.Set;
 
-
 public class Depot<T extends ITransport, W extends IWagon> {
 
 	private T[] places;

@@ -7,5 +7,6 @@ public interface ITransport {
 	Color MainColor();
 	Color DopColor();
 	int StartPosX();
+	
 	int StartPosY();
 }
