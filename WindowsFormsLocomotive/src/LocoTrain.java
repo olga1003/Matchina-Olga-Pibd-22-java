@@ -48,9 +48,8 @@ public class LocoTrain extends Train {
         }
     }
 	@Override
-    public void DrawTrain(Graphics g)
-	{	
-    	g.setColor(Color.BLACK);
+    public void DrawTrain(Graphics g) {	
+    g.setColor(Color.BLACK);
 		g.fillRect( _startPosX + 43, _startPosY + 30, 7, 10);
 		g.fillRect( _startPosX + 20, _startPosY + 55, 70, 7);
 		
