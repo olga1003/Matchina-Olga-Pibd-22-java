@@ -13,9 +13,11 @@ public abstract  class Train implements ITransport{
 	public float Weight; { Set get;}
 	public Color MainColor;  
 	public Color DopColor; 
+	
 	public int StartPosX() {
 		return _startPosX;
 	}
+	
 	public int StartPosY() {
 		return _startPosY;
 	}
