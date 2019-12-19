@@ -7,7 +7,9 @@ public class PanelDepot extends JPanel {
 	public PanelDepot(Depot<ITransport, IWagon> depot) {
 		this.depot = depot;
 	}
-	
+	public void setDepot(Depot<ITransport, IWagon> depot) {
+		this.depot = depot;
+	}
 	public void paint(Graphics g) {
 		super.paint(g);
 		depot.draw(g);

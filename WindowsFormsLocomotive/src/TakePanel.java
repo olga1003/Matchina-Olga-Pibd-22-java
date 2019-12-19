@@ -5,7 +5,8 @@ import javax.swing.JPanel;
 public class TakePanel  extends JPanel {
 	public ITransport transport;
 	public IWagon wagon;
-	
+	public TakePanel() {
+	}
 	public void drawTrain(ITransport transport, IWagon wagon ) {
 		this.transport = transport;
 		this.wagon = wagon;

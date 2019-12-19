@@ -1,65 +1,62 @@
 import java.awt.Color;
 import java.awt.Graphics;
+import java.util.HashMap;
 import java.util.Set;
 
-
 public class Depot<T extends ITransport, W extends IWagon> {
-
-	private T[] places;
-	private W[] placesWagon;
+	private HashMap<Integer, T> places;
+	private HashMap<Integer, W> placesWagon;
 	private int pictureWidth;{Set get;}
 	private int pictureHeight; {Set get;}
 	private final int placeSizeWidth = 400;
 	private final int placeSizeHeight = 80;
+	int maxCount;
+	public T getPlace(int i) {
+		return places.get(i);
+	}
 
 	public Depot(int sizes, int pictureWidth, int pictureHeight)
 	{
-		this.places = (T[]) new ITransport[sizes];
-		this.placesWagon = (W[]) new IWagon[sizes];
+		this.places =  new HashMap<>(sizes);
+		this.placesWagon =  new HashMap<>(sizes);
 		this.pictureWidth = pictureWidth;
 		this.pictureHeight = pictureHeight;
-		for (int i = 0; i < places.length; i++)
-		{
-			places[i] = null;
-			placesWagon[i] = null;
-		}
+		this.maxCount = sizes;
 	}
 
 	public int addTrain(T train, W wagon) {
-		for (int i = 0; i < places.length; i++)
+		if (places.size() == maxCount)
 		{
-			if (this.checkFreePlace(i))
+			return -1;
+		}
+		for (int i = 0; i < maxCount; i++)
+		{
+			if (checkFreePlace(i))
 			{
-				places[i] = train;
-				places[i].SetPosition(5 + i / 5 * placeSizeWidth + 50, 
+				places.put(i, train);
+				places.get(i).SetPosition(5 + i / 5 * placeSizeWidth + 50, 
 						i % 5 * placeSizeHeight + 45, this.pictureWidth, this.pictureHeight);
-				placesWagon[i] = wagon;
-				placesWagon[i].SetPosition(5 + i / 5 * placeSizeWidth + 50,
+				placesWagon.put(i, wagon);
+				placesWagon.get(i).SetPosition(5 + i / 5 * placeSizeWidth + 50,
 						i % 5 * placeSizeHeight + 45);
 				return i;
 			}       	
 		}
-
 		return -1;
 	}
 	public T deleteTrain(int index) {
-		if (index < 0 || index > places.length)
+		if (!checkFreePlace(index))
 		{
-			return null;
-		}
-		if (!this.checkFreePlace(index))
-		{
-			T train = places[index];
-			places[index] = null;
-			placesWagon[index] = null;
+			T train = places.get(index);
+			places.remove(index);
+			placesWagon.remove(index);
 			return train;
 		}
 		return null;
 	}
-
 	public boolean moreEquals(int countplace) {
 		int FreePlace = 0;
-		for (int i = 0; i < places.length; i++) {
+		for (int i = 0; i < maxCount; i++) {
 			if (checkFreePlace(i)) {
 				FreePlace++;
 			}
@@ -69,10 +66,9 @@ public class Depot<T extends ITransport, W extends IWagon> {
 		}else      
 			return false;
 	}
-	
 	public boolean lessEquals(int countplace) {
 		int FreePlace = 0;
-		for (int i = 0; i < places.length; i++) {
+		for (int i = 0; i < maxCount; i++) {
 			if (checkFreePlace(i)) {
 				FreePlace++;
 			}
@@ -82,32 +78,30 @@ public class Depot<T extends ITransport, W extends IWagon> {
 		}else      
 			return false;
 	}
-
 	private boolean checkFreePlace(int index)
 	{
-		return (places[index] == null);
+		return !(places.containsKey(index));
 	}
 	public void draw(Graphics g)
 	{
 		DrawMarking(g);
-		for (int i = 0; i < places.length; i++)
+		for (int i = 0; i < maxCount; i++)
 		{
 			if (!checkFreePlace(i))
 			{
-				places[i].DrawTrain(g);
-				if (placesWagon[i] != null) {
-					placesWagon[i].draw(g, placesWagon[i].PositionX(),
-							placesWagon[i].PositionY(), places[i].MainColor());
+				places.get(i).DrawTrain(g);
+				if (placesWagon.containsKey(i)) {
+					placesWagon.get(i).draw(g,    placesWagon.get(i).PositionX(),
+							placesWagon.get(i).PositionY(), places.get(i).MainColor());
 				}
 			}
 		}        
 	}
-
 	private void DrawMarking(Graphics g)
 	{
 		g.setColor(Color.BLACK); 
 		//границы праковки
-		for (int i = 0; i < places.length / 5; i++)             
+		for (int i = 0; i < maxCount / 5; i++)             
 		{//отрисовываем, по 5 мест на линии
 			for (int j = 0; j < 5; ++j)
 			{//линия рамзетки места
