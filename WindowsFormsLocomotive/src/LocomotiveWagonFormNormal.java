@@ -4,10 +4,10 @@ import java.awt.Graphics;
 public class LocomotiveWagonFormNormal  implements IWagon{
 	private int positionX;
 	private int positionY;
-	public int PositionX() {
+	public int getPositionX() {
 		return positionX;
 	}
-	public int PositionY() {
+	public int getPositionY() {
 		return positionY;
 	}
 	public void SetPosition(int positionX, int positionY) {

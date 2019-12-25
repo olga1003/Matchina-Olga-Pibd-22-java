@@ -3,10 +3,10 @@ import java.awt.Graphics;
 public  class LocoWagonFormDoubleOval implements IWagon{ 
 	private int positionX;
 	private int positionY;
-	public int PositionX() {
+	public int getPositionX() {
 		return positionX;
 	}
-	public int PositionY() {
+	public int getPositionY() {
 		return positionY;
 	}
 

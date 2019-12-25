@@ -19,9 +19,9 @@ import java.awt.Graphics;
 		if (transport != null) {
 			transport.DrawTrain(g);
 			if (wagon != null) {
-				wagon.SetPosition(transport.StartPosX(), transport.StartPosY());
-				wagon.draw(g, wagon.PositionX(), wagon.PositionY(),
-						transport.MainColor());
+				wagon.SetPosition(transport.getStartPosX(), transport.getStartPosY());
+				wagon.draw(g, wagon.getPositionX(), wagon.getPositionY(),
+						transport.getMainColor());
 			}
 		}
 	}

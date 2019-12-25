@@ -95,8 +95,8 @@ import java.util.Set;
 			{
 				places[i].DrawTrain(g);
 				if (placesWagon[i] != null) {
-					placesWagon[i].draw(g, placesWagon[i].PositionX(),
-							placesWagon[i].PositionY(), places[i].MainColor());
+					placesWagon[i].draw(g, placesWagon[i].getPositionX(),
+							placesWagon[i].getPositionY(), places[i].getMainColor());
 				}
 			}
 		}        
