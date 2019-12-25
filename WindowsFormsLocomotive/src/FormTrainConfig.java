@@ -64,8 +64,6 @@ public class FormTrainConfig {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 
-
-
 		JLabel labelTrain = new JLabel("\u041F\u043E\u0435\u0437\u0434");
 		labelTrain.addMouseListener(new MouseAdapter() {
 			@Override
@@ -103,7 +101,6 @@ public class FormTrainConfig {
 		labelLocoTrain.setBounds(18, 143, 260, 133);
 		labelLocoTrain.setBorder(new LineBorder(new Color(0, 0, 0)));
 		frame.getContentPane().add(labelLocoTrain);
-
 		
 		JLabel labelWagonFormNormal = new JLabel("\u041E\u0432\u0430\u043B\u044C\u043D\u044B\u0435 \u0432\u0430\u0433\u043E\u043D\u044B ");
 		labelWagonFormNormal.addMouseListener(new MouseAdapter() {
@@ -366,6 +363,5 @@ public class FormTrainConfig {
 		labelAddWagon.setBorder(new LineBorder(new Color(0, 0, 0)));
 		labelAddWagon.setBounds(304, 367, 356, 60);
 		frame.getContentPane().add(labelAddWagon);
-		
 	}
 }

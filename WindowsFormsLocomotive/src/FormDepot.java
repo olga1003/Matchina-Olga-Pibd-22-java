@@ -25,7 +25,6 @@ public class FormDepot {
 	private ITransport locomotive;
 	private final int countLevels = 5;
 	private MultiLevelDepot depot;
- 
 	private HashSet<ITransport> hashSetTrain = new HashSet<ITransport>();
 	private HashSet<IWagon> hashSetWagon = new HashSet<IWagon>();
 	private ITransport transport;
@@ -76,8 +75,6 @@ public class FormDepot {
 		panelDepot.setBounds(10, 11, panelPierWidth, panelPierHeight);
 		frame.getContentPane().add(panelDepot);
 
-
-
 		String[] levels = new String[countLevels];
 		for(int i = 0; i < countLevels; i++) {
 			levels[i] = "Уровень " + (i + 1);
@@ -123,7 +120,6 @@ public class FormDepot {
 		label_1.setBounds(912, 224, 48, 14);
 		frame.getContentPane().add(label_1);
 
-
 		textFieldIndex = new JTextField();
 		textFieldIndex.setBounds(972, 226, 51, 22);
 		frame.getContentPane().add(textFieldIndex);
@@ -158,6 +154,5 @@ public class FormDepot {
 		panelTake.setBorder(new LineBorder(new Color(0, 0, 0)));
 		panelTake.setBounds(891, 286, 410, 186);
 		frame.getContentPane().add(panelTake);
-
 	}
 }

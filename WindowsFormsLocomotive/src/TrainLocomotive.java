@@ -18,7 +18,6 @@ public class TrainLocomotive extends LocoTrain {
 	}
 	public void setWagon(IWagon wagon) {
 		wagon = wagon;
-		
 	}
 	public void setDopColor(Color DopColor) {
 		this.DopColor = DopColor;
