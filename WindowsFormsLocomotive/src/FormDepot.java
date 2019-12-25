@@ -4,25 +4,36 @@ import javax.swing.JButton;
 import javax.swing.JColorChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
+import javax.swing.JList;
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import java.awt.event.ActionListener;
+import java.util.HashSet;
+import java.util.Hashtable;
 import java.util.Random;
 import java.awt.event.ActionEvent;
+import javax.swing.JPanel;
 
- public class FormDepot {
+public class FormDepot {
 
- 	private JFrame frame;
+	private JFrame frame;
 	private final int panelPierWidth = 870;
 	private final int panelPierHeight = 460;
-	private Depot<ITransport, IWagon> depot;
+	private ITransport locomotive;
+	private final int countLevels = 5;
+	private MultiLevelDepot depot;
+	private HashSet<ITransport> hashSetTrain = new HashSet<ITransport>();
+	private HashSet<IWagon> hashSetWagon = new HashSet<IWagon>();
 	private ITransport transport;
 	private IWagon wagon;
+	private int storageIndex = 0;
 	private TakePanel panelTake;
-	private PanelDepot panelDepot;
 	private JTextField textFieldIndex;
 	static int choiceOperator = 0;
+	private JList<String> list;
+	private  PanelDepot panelDepot;
 	/**
 	 * Launch the application.
 	 */
@@ -39,14 +50,14 @@ import java.awt.event.ActionEvent;
 		});
 	}
 
- 	/**
+	/**
 	 * Create the application.
 	 */
 	public FormDepot() {
 		initialize();
 	}
 
- 	/**
+	/**
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
@@ -55,12 +66,33 @@ import java.awt.event.ActionEvent;
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 
- 		depot = new Depot<ITransport, IWagon>(20, panelPierWidth, panelPierWidth);
+		depot = new MultiLevelDepot(countLevels, panelPierWidth, panelPierHeight);
 
- 		JButton btnTrain = new JButton("Train");
+		panelDepot = new PanelDepot(depot.getDepot(0));
+		panelDepot.setBorder(new LineBorder(new Color(0, 0, 0)));
+		panelDepot.setBounds(10, 11, panelPierWidth, panelPierHeight);
+		frame.getContentPane().add(panelDepot);
+
+		String[] levels = new String[countLevels];
+		for(int i = 0; i < countLevels; i++) {
+			levels[i] = "Уровень " + (i + 1);
+		}
+		list = new JList(levels);
+		list.setSelectedIndex(0);
+		list.setBounds(890, 11, 162, 144);
+		list.addListSelectionListener(new ListSelectionListener() {
+			public void valueChanged(ListSelectionEvent arg0) {
+				int index = list.getSelectedIndex();
+				panelDepot.setDepot(depot.getDepot(index));
+				panelDepot.repaint();
+			}
+		});
+		frame.getContentPane().add(list);
+
+		JButton btnTrain = new JButton("Train");
 		btnTrain.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Color newColor = JColorChooser.showDialog(frame, null, Color.blue);
+				Color newColor = JColorChooser.showDialog(frame, "", Color.blue);
 				if (newColor != null) {
 					transport = new LocoTrain(100, 1000, newColor, Color.blue);
 					Random rnd = new Random();
@@ -75,22 +107,22 @@ import java.awt.event.ActionEvent;
 						wagon = new LocoWagonFormDoubleOval();
 						break;
 					}
-					int place = depot.addTrain(transport, wagon);
+					int place = depot.getDepot(list.getSelectedIndex()).addTrain(transport, wagon);
 					panelDepot.repaint();
 				}
 			}
 		});
-		btnTrain.setBounds(981, 11, 97, 25);
+		btnTrain.setBounds(1075, 120, 97, 25);
 		frame.getContentPane().add(btnTrain);
 
- 		JButton btnLocoTrain = new JButton("LocoTrain");
+		JButton btnLocoTrain = new JButton("LocoTrain");
 		btnLocoTrain.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Color mainColor = JColorChooser.showDialog(frame, null, Color.blue);
+				Color mainColor = JColorChooser.showDialog(frame, "Âûáåðèòå îñíîâíîé öâåò", Color.blue);
 				if (mainColor != null) {
-					Color dopColor = JColorChooser.showDialog(frame, null, Color.blue);
+					Color dopColor = JColorChooser.showDialog(frame, "Âûáåðèòå äîïîëíèòåëüíûé öâåò", Color.blue);
 					if (dopColor != null) {
-						transport = new TrainLocomotive(100, 1000, Number.Three, mainColor, dopColor, true, true);
+						transport = new TrainLocomotive(100, 1000, Number.One, mainColor, dopColor, true, true);
 						Random rnd = new Random();
 						switch (rnd.nextInt(3)) {
 						case 0:
@@ -103,53 +135,55 @@ import java.awt.event.ActionEvent;
 							wagon = new LocoWagonFormDoubleOval();
 							break;
 						}
-						int place = depot.addTrain(transport, wagon);
+						int place = depot.getDepot(list.getSelectedIndex()).addTrain(transport, wagon);
 						panelDepot.repaint();
-					}					      
+					}
 				}
 			}
 		});
-		btnLocoTrain.setBounds(981, 49, 97, 25);
+		btnLocoTrain.setBounds(1075, 155, 97, 25);
 		frame.getContentPane().add(btnLocoTrain);
 		JLabel label = new JLabel("\u0417\u0430\u0431\u0440\u0430\u0442\u044C \u043F\u043E\u0435\u0437\u0434:");
 		label.setBounds(915, 199, 122, 14);
 		frame.getContentPane().add(label);
 
- 		JLabel label_1 = new JLabel("\u041C\u0435\u0441\u0442\u043E:");
+		JLabel label_1 = new JLabel("\u041C\u0435\u0441\u0442\u043E:");
 		label_1.setBounds(912, 224, 48, 14);
 		frame.getContentPane().add(label_1);
 
- 		textFieldIndex = new JTextField();
+		textFieldIndex = new JTextField();
 		textFieldIndex.setBounds(972, 226, 51, 22);
 		frame.getContentPane().add(textFieldIndex);
 		textFieldIndex.setColumns(10);
 
- 		JButton btnTake = new JButton("Take");
+		JButton btnTake = new JButton("Take");
 		btnTake.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(textFieldIndex.getText() != "") {
-					transport = depot.deleteTrain(Integer.parseInt(textFieldIndex.getText()));
+					transport = depot.getTrain(list.getSelectedIndex(),Integer.parseInt(textFieldIndex.getText()));
 					if (transport != null) {
 						panelTake.clear();
-						panelTake.drawTrain(transport, wagon); 
-						panelTake.transport.SetPosition(30, 100, panelPierWidth, panelPierHeight);
+						hashSetTrain.add(transport); 
+						if (wagon != null) {
+							panelTake.drawTrain(transport, wagon);
+							hashSetWagon.add(wagon); 
+						} else {
+							panelTake.drawTrain(transport, wagon);
+						}
+						storageIndex++;
+						panelTake.transport.SetPosition(30, 50, panelPierWidth, panelPierHeight);
 						panelDepot.repaint();
 						panelTake.repaint();
 					}
 				}
 			}
 		});
-		btnTake.setBounds(992, 164, 97, 25);
+		btnTake.setBounds(1045, 219, 97, 25);
 		frame.getContentPane().add(btnTake);
 
- 		panelTake = new TakePanel();
+		panelTake = new TakePanel();
 		panelTake.setBorder(new LineBorder(new Color(0, 0, 0)));
 		panelTake.setBounds(891, 286, 410, 186);
 		frame.getContentPane().add(panelTake);
-
- 		panelDepot = new PanelDepot(depot);
-		panelDepot.setBorder(new LineBorder(new Color(0, 0, 0)));
-		panelDepot.setBounds(10, 11, panelPierWidth, panelPierHeight);
-		frame.getContentPane().add(panelDepot);
 	}
 }
