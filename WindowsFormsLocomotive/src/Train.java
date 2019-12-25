@@ -16,7 +16,6 @@ public abstract  class Train implements ITransport{
 	public int getStartPosX() {
 		return _startPosX;
 	}
-	
 	public int getStartPosY() {
 		return _startPosY;
 	}
