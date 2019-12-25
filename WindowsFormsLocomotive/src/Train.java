@@ -11,7 +11,20 @@ public abstract  class Train implements ITransport{
 	private int locoHeight = 60;
 	public int MaxSpeed; {  Set get;}
 	public float Weight; { Set get;}
-	public Color MainColor; { Set get;}	
+	public Color MainColor;  
+	public Color DopColor; 
+	public int getStartPosX() {
+		return _startPosX;
+	}
+	public int getStartPosY() {
+		return _startPosY;
+	}
+	public Color getMainColor() {
+		return MainColor;
+	}
+	public Color getDopColor() {
+		return DopColor;
+	}
     public void SetPosition(int x, int y, int width, int height)
     {
         _startPosX = x;

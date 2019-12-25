@@ -5,13 +5,11 @@ import java.util.Random;
 public class LocoTrain extends Train {
 	private   int locoWidth = 100;
 	private  int locoHeight = 60;
-	int design;
-    public LocoTrain(int maxSpeed, float weight, Color mainColor) {
-        this.MaxSpeed = maxSpeed;
-        this.Weight = weight;
-        this.MainColor = mainColor;
-        Random rnd =new Random();
-        design=rnd.nextInt(3)+1;
+	public LocoTrain(int maxSpeed, int weight, Color mainColor, Color dopColor) {
+    	this.MaxSpeed = maxSpeed;
+		this.Weight = weight;
+		this.MainColor = mainColor;
+		this.DopColor = dopColor;
 	}
 
 	public  void MoveTransport(Direction direction)
@@ -51,19 +49,8 @@ public class LocoTrain extends Train {
     }
 	@Override
     public void DrawTrain(Graphics g)
-	{
-    	switch (design) {
-		case 1:
-			new LocomotiveWagonFormNormal().draw(Number.One,g, _startPosX, _startPosY);
-			break;
-		case 2:
-			new LocoWagonFormOval().draw(Number.Two,g, _startPosX, _startPosY);
-			break;
-		case 3:
-			new LocoWagonFormDoubleOval().draw(Number.Three,g, _startPosX, _startPosY);
-			break;
-		}	
-    	g.setColor(Color.BLACK);
+ 	{  
+    g.setColor(Color.BLACK);
 		g.fillRect( _startPosX + 43, _startPosY + 30, 7, 10);
 		g.fillRect( _startPosX + 20, _startPosY + 55, 70, 7);
 		
