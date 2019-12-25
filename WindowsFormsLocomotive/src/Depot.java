@@ -19,7 +19,6 @@ public class Depot<T extends ITransport, W extends IWagon> {
 		this.pictureHeight = pictureHeight;
 		this.maxCount = sizes;
 	}
-
 	public int addTrain(T train, W wagon) {
 		if (places.size() == maxCount)
 		{
