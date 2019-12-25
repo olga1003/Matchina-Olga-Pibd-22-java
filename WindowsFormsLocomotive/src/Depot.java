@@ -11,7 +11,6 @@ public class Depot<T extends ITransport, W extends IWagon> {
 	private final int placeSizeWidth = 400;
 	private final int placeSizeHeight = 80;
 	int maxCount;
-
 	public Depot(int sizes, int pictureWidth, int pictureHeight)
 	{
 		this.places =  new HashMap<>(sizes);
