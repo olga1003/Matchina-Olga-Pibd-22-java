@@ -88,8 +88,8 @@ public class Depot<T extends ITransport, W extends IWagon> {
 			{
 				places.get(i).DrawTrain(g);
 				if (placesWagon.containsKey(i)) {
-					placesWagon.get(i).draw(g,    placesWagon.get(i).PositionX(),
-							placesWagon.get(i).PositionY(), places.get(i).MainColor());
+					placesWagon.get(i).draw(g,    placesWagon.get(i).getPositionX(),
+							placesWagon.get(i).getPositionY(), places.get(i).getMainColor());
 				}
 			}
 		}        

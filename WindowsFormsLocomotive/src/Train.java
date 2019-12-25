@@ -14,17 +14,17 @@ public abstract  class Train implements ITransport{
 	public Color MainColor;  
 	public Color DopColor; 
 	
-	public int StartPosX() {
+	public int getStartPosX() {
 		return _startPosX;
 	}
 	
-	public int StartPosY() {
+	public int getStartPosY() {
 		return _startPosY;
 	}
-	public Color MainColor() {
+	public Color getMainColor() {
 		return MainColor;
 	}
-	public Color DopColor() {
+	public Color getDopColor() {
 		return DopColor;
 	}
     public void SetPosition(int x, int y, int width, int height)
