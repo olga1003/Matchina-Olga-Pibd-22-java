@@ -8,15 +8,21 @@ public class TrainLocomotive extends LocoTrain {
 	public  boolean Coal; { Set get;}
 	private Number number;
 	IWagon wagon;
-	public TrainLocomotive(int maxSpeed, int weight,Number number, Color mainColor, Color dopColor,
+	public TrainLocomotive(int maxSpeed, int weight,Number number, Color mainColor, Color dopColor, IWagon wagon,
 			boolean steam, boolean coal) {
-		super(maxSpeed, weight, mainColor, dopColor);
+		super(maxSpeed, weight,wagon, mainColor, dopColor);
 		this.DopColor = dopColor;
 		this.Steam = steam;
 		this.Coal = coal;
 		this.number = number;
 	}
-
+	public void setWagon(IWagon wagon) {
+		wagon = wagon;
+		
+	}
+	public void setDopColor(Color DopColor) {
+		this.DopColor = DopColor;
+	}
 	@Override	
 	public  void DrawTrain(Graphics g)
 	{		

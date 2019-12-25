@@ -3,6 +3,7 @@ import java.awt.Graphics;
 import java.util.HashMap;
 import java.util.Set;
 
+
 public class Depot<T extends ITransport, W extends IWagon> {
 	private HashMap<Integer, T> places;
 	private HashMap<Integer, W> placesWagon;
@@ -10,72 +11,82 @@ public class Depot<T extends ITransport, W extends IWagon> {
 	private int pictureHeight; {Set get;}
 	private final int placeSizeWidth = 400;
 	private final int placeSizeHeight = 80;
-	int maxCount;
+    int maxCount;
+    public T getPlace(int i) {
+		return places.get(i);
+	}
+    public W getPlacesDeck(int i) {
+		return placesWagon.get(i);
+	}
 	public Depot(int sizes, int pictureWidth, int pictureHeight)
 	{
 		this.places =  new HashMap<>(sizes);
 		this.placesWagon =  new HashMap<>(sizes);
 		this.pictureWidth = pictureWidth;
 		this.pictureHeight = pictureHeight;
-		this.maxCount = sizes;
+		   this.maxCount = sizes;
 	}
-	public int addTrain(T train, W wagon) {
+
+	public int plusTrain(T train) {
 		if (places.size() == maxCount)
 		{
 			return -1;
-		}
-		for (int i = 0; i < maxCount; i++)
+	    }
+		   for (int i = 0; i < maxCount; i++)
 		{
 			if (checkFreePlace(i))
 			{
-				places.put(i, train);
-				places.get(i).SetPosition(5 + i / 5 * placeSizeWidth + 50, 
+				 places.put(i, train);
+				  places.get(i).SetPosition(5 + i / 5 * placeSizeWidth + 50, 
 						i % 5 * placeSizeHeight + 45, this.pictureWidth, this.pictureHeight);
-				placesWagon.put(i, wagon);
-				placesWagon.get(i).SetPosition(5 + i / 5 * placeSizeWidth + 50,
-						i % 5 * placeSizeHeight + 45);
 				return i;
 			}       	
 		}
+
 		return -1;
 	}
-	public T deleteTrain(int index) {
+	public int plus(T train, W wagon) {
+		if (places.size() == maxCount)
+		{
+			return -1;
+	    }
+		   for (int i = 0; i < maxCount; i++)
+		{
+			if (checkFreePlace(i))
+			{
+				 places.put(i, train);
+				  places.get(i).SetPosition(5 + i / 5 * placeSizeWidth + 50, 
+						i % 5 * placeSizeHeight + 45, this.pictureWidth, this.pictureHeight);
+				  placesWagon.put(i, wagon);				 
+				return i;
+			}       	
+		}
+
+		return -1;
+	}
+	public T minus(int index) {
 		if (!checkFreePlace(index))
 		{
-			T train = places.get(index);
-			places.remove(index);
-			placesWagon.remove(index);
-			return train;
+			 T train = places.get(index);
+	            places.remove(index);
+	            return train;
 		}
 		return null;
 	}
-	public boolean moreEquals(int countplace) {
-		int FreePlace = 0;
-		for (int i = 0; i < maxCount; i++) {
-			if (checkFreePlace(i)) {
-				FreePlace++;
-			}
-		}
-		if(FreePlace <= countplace) {
-			return true; 
-		}else      
-			return false;
+
+	public W minusWagon(int index) {
+		 if (placesWagon.containsKey(index))
+	        {
+	            W wagon = placesWagon.get(index);
+	            placesWagon.remove(index);
+	            return wagon;
+	        }
+		return null;
 	}
-	public boolean lessEquals(int countplace) {
-		int FreePlace = 0;
-		for (int i = 0; i < maxCount; i++) {
-			if (checkFreePlace(i)) {
-				FreePlace++;
-			}
-		}
-		if(FreePlace >= countplace) {
-			return true; 
-		}else      
-			return false;
-	}
+
 	private boolean checkFreePlace(int index)
 	{
-		return !(places.containsKey(index));
+		   return !(places.containsKey(index));
 	}
 	public void draw(Graphics g)
 	{
@@ -84,27 +95,19 @@ public class Depot<T extends ITransport, W extends IWagon> {
 		{
 			if (!checkFreePlace(i))
 			{
-				places.get(i).DrawTrain(g);
-				if (placesWagon.containsKey(i)) {
-					placesWagon.get(i).draw(g,    placesWagon.get(i).getPositionX(),
-							placesWagon.get(i).getPositionY(), places.get(i).getMainColor());
-					places.get(i).DrawTrain(g);
-					if (placesWagon.containsKey(i)) {
-						placesWagon.get(i).draw(g,    placesWagon.get(i).getPositionX(),
-								placesWagon.get(i).getPositionY(), places.get(i).getMainColor());
-					}
-				}
-			}        
-		}
+				   places.get(i).DrawTrain(g);			  	
+			}
+		}        
 	}
+
 	private void DrawMarking(Graphics g)
 	{
 		g.setColor(Color.BLACK); 
-		//ãðàíèöû ïðàêîâêè
+		//границы праковки
 		for (int i = 0; i < maxCount / 5; i++)             
-		{//îòðèñîâûâàåì, ïî 5 ìåñò íà ëèíèè
+		{//отрисовываем, по 5 мест на линии
 			for (int j = 0; j < 5; ++j)
-			{//ëèíèÿ ðàìçåòêè ìåñòà
+			{//линия рамзетки места
 				g.drawLine(i * placeSizeWidth, j * placeSizeHeight+100,
 						i * placeSizeWidth + 1000, j * placeSizeHeight+100);
 				g.drawLine(i * placeSizeWidth, j * placeSizeHeight+110,
@@ -116,4 +119,5 @@ public class Depot<T extends ITransport, W extends IWagon> {
 			}
 		}
 	}
+
 }

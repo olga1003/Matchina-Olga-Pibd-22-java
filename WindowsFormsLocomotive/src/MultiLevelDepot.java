@@ -21,7 +21,7 @@ public class MultiLevelDepot {
 
 	public ITransport  getTrain(int ind, int level) {
 		if (level > -1 &&  level < depotStages.size()) {
-			ITransport transport = depotStages.get(level).deleteTrain(ind);
+			ITransport transport = depotStages.get(level).minus(ind);
 			return transport;
 		}
 		return null;

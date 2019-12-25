@@ -5,6 +5,7 @@ import javax.swing.JColorChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 import javax.swing.event.ListSelectionEvent;
@@ -24,6 +25,7 @@ public class FormDepot {
 	private ITransport locomotive;
 	private final int countLevels = 5;
 	private MultiLevelDepot depot;
+ 
 	private HashSet<ITransport> hashSetTrain = new HashSet<ITransport>();
 	private HashSet<IWagon> hashSetWagon = new HashSet<IWagon>();
 	private ITransport transport;
@@ -33,6 +35,7 @@ public class FormDepot {
 	private JTextField textFieldIndex;
 	static int choiceOperator = 0;
 	private JList<String> list;
+	int index = 0;
 	private  PanelDepot panelDepot;
 	/**
 	 * Launch the application.
@@ -62,7 +65,7 @@ public class FormDepot {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 1331, 620);
+		frame.setBounds(100, 100, 1331, 535);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 
@@ -70,8 +73,10 @@ public class FormDepot {
 
 		panelDepot = new PanelDepot(depot.getDepot(0));
 		panelDepot.setBorder(new LineBorder(new Color(0, 0, 0)));
-		panelDepot.setBounds(10, 11, panelPierWidth, panelPierHeight);
+		panelDepot.setBounds(10, 11, 851, 460);
 		frame.getContentPane().add(panelDepot);
+
+
 
 		String[] levels = new String[countLevels];
 		for(int i = 0; i < countLevels; i++) {
@@ -79,7 +84,7 @@ public class FormDepot {
 		}
 		list = new JList(levels);
 		list.setSelectedIndex(0);
-		list.setBounds(890, 11, 162, 144);
+		list.setBounds(890, 11, 214, 186);
 		list.addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent arg0) {
 				int index = list.getSelectedIndex();
@@ -88,61 +93,28 @@ public class FormDepot {
 			}
 		});
 		frame.getContentPane().add(list);
-
-		JButton btnTrain = new JButton("Train");
-		btnTrain.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				Color newColor = JColorChooser.showDialog(frame, "", Color.blue);
-				if (newColor != null) {
-					transport = new LocoTrain(100, 1000, newColor, Color.blue);
-					Random rnd = new Random();
-					switch (rnd.nextInt(3)) {
-					case 0:
-						wagon = new LocomotiveWagonFormNormal();
-						break;
-					case 1:
-						wagon = new LocoWagonFormOval();
-						break;
-					case 2:
-						wagon = new LocoWagonFormDoubleOval();
-						break;
-					}
-					int place = depot.getDepot(list.getSelectedIndex()).addTrain(transport, wagon);
-					panelDepot.repaint();
-				}
-			}
-		});
-		btnTrain.setBounds(1075, 120, 97, 25);
-		frame.getContentPane().add(btnTrain);
-
-		JButton btnLocoTrain = new JButton("LocoTrain");
-		btnLocoTrain.addActionListener(new ActionListener() {
+		
+		JButton buttonCreate = new JButton("Заказать");
+		buttonCreate = new JButton("\u0417\u0430\u043A\u0430\u0437\u0430\u0442\u044C");
+		buttonCreate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Color mainColor = JColorChooser.showDialog(frame, "Âûáåðèòå îñíîâíîé öâåò", Color.blue);
-				if (mainColor != null) {
-					Color dopColor = JColorChooser.showDialog(frame, "Âûáåðèòå äîïîëíèòåëüíûé öâåò", Color.blue);
-					if (dopColor != null) {
-						transport = new TrainLocomotive(100, 1000, Number.One, mainColor, dopColor, true, true);
-						Random rnd = new Random();
-						switch (rnd.nextInt(3)) {
-						case 0:
-							wagon = new LocomotiveWagonFormNormal();
-							break;
-						case 1:
-							wagon = new LocoWagonFormOval();
-							break;
-						case 2:
-							wagon = new LocoWagonFormDoubleOval();
-							break;
+				FormTrainConfig config = new FormTrainConfig(new TrainDelegate() {
+					@Override
+					public void Invoke(ITransport transport) {
+						if (transport != null && list.getSelectedIndex() > -1) {
+						int place = depot.getDepot(list.getSelectedIndex()).plus(transport, wagon);
+							if (place > -1)
+								panelDepot.repaint();
+							else
+								JOptionPane.showMessageDialog(null,"Поезд не удалось поставить");
 						}
-						int place = depot.getDepot(list.getSelectedIndex()).addTrain(transport, wagon);
-						panelDepot.repaint();
 					}
-				}
+				});
+				config.getFrame().setVisible(true);
 			}
 		});
-		btnLocoTrain.setBounds(1075, 155, 97, 25);
-		frame.getContentPane().add(btnLocoTrain);
+		buttonCreate.setBounds(1137, 68, 148, 99);
+		frame.getContentPane().add(buttonCreate);
 		JLabel label = new JLabel("\u0417\u0430\u0431\u0440\u0430\u0442\u044C \u043F\u043E\u0435\u0437\u0434:");
 		label.setBounds(915, 199, 122, 14);
 		frame.getContentPane().add(label);
@@ -150,6 +122,7 @@ public class FormDepot {
 		JLabel label_1 = new JLabel("\u041C\u0435\u0441\u0442\u043E:");
 		label_1.setBounds(912, 224, 48, 14);
 		frame.getContentPane().add(label_1);
+
 
 		textFieldIndex = new JTextField();
 		textFieldIndex.setBounds(972, 226, 51, 22);
@@ -179,11 +152,12 @@ public class FormDepot {
 			}
 		});
 		btnTake.setBounds(1045, 219, 97, 25);
-		frame.getContentPane().add(btnTake);
+		frame.getContentPane().add(btnTake);	
 
 		panelTake = new TakePanel();
 		panelTake.setBorder(new LineBorder(new Color(0, 0, 0)));
 		panelTake.setBounds(891, 286, 410, 186);
 		frame.getContentPane().add(panelTake);
+
 	}
 }
