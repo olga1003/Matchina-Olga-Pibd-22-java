@@ -73,7 +73,7 @@ public class FormDepot {
 
 		panelDepot = new PanelDepot(depot.getDepot(0));
 		panelDepot.setBorder(new LineBorder(new Color(0, 0, 0)));
-		panelDepot.setBounds(10, 11, 851, 460);
+		panelDepot.setBounds(10, 11, panelPierWidth, panelPierHeight);
 		frame.getContentPane().add(panelDepot);
 
 
@@ -102,7 +102,7 @@ public class FormDepot {
 					@Override
 					public void Invoke(ITransport transport) {
 						if (transport != null && list.getSelectedIndex() > -1) {
-						int place = depot.getDepot(list.getSelectedIndex()).plus(transport, wagon);
+						int place = depot.getDepot(list.getSelectedIndex()).addTrain(transport, wagon);
 							if (place > -1)
 								panelDepot.repaint();
 							else

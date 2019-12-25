@@ -11,82 +11,72 @@ public class Depot<T extends ITransport, W extends IWagon> {
 	private int pictureHeight; {Set get;}
 	private final int placeSizeWidth = 400;
 	private final int placeSizeHeight = 80;
-    int maxCount;
-    public T getPlace(int i) {
-		return places.get(i);
-	}
-    public W getPlacesDeck(int i) {
-		return placesWagon.get(i);
-	}
+	int maxCount;
 	public Depot(int sizes, int pictureWidth, int pictureHeight)
 	{
 		this.places =  new HashMap<>(sizes);
 		this.placesWagon =  new HashMap<>(sizes);
 		this.pictureWidth = pictureWidth;
 		this.pictureHeight = pictureHeight;
-		   this.maxCount = sizes;
+		this.maxCount = sizes;
 	}
 
-	public int plusTrain(T train) {
+	public int addTrain(T train, W wagon) {
 		if (places.size() == maxCount)
 		{
 			return -1;
-	    }
-		   for (int i = 0; i < maxCount; i++)
+		}
+		for (int i = 0; i < maxCount; i++)
 		{
 			if (checkFreePlace(i))
 			{
-				 places.put(i, train);
-				  places.get(i).SetPosition(5 + i / 5 * placeSizeWidth + 50, 
+				places.put(i, train);
+				places.get(i).SetPosition(5 + i / 5 * placeSizeWidth + 50, 
 						i % 5 * placeSizeHeight + 45, this.pictureWidth, this.pictureHeight);
+				placesWagon.put(i, wagon);				 
 				return i;
 			}       	
 		}
 
 		return -1;
 	}
-	public int plus(T train, W wagon) {
-		if (places.size() == maxCount)
-		{
-			return -1;
-	    }
-		   for (int i = 0; i < maxCount; i++)
-		{
-			if (checkFreePlace(i))
-			{
-				 places.put(i, train);
-				  places.get(i).SetPosition(5 + i / 5 * placeSizeWidth + 50, 
-						i % 5 * placeSizeHeight + 45, this.pictureWidth, this.pictureHeight);
-				  placesWagon.put(i, wagon);				 
-				return i;
-			}       	
-		}
-
-		return -1;
-	}
-	public T minus(int index) {
+	public T deleteTrain(int index) {
 		if (!checkFreePlace(index))
 		{
-			 T train = places.get(index);
-	            places.remove(index);
-	            return train;
+			T train = places.get(index);
+			places.remove(index);
+			placesWagon.remove(index);
+			return train;
 		}
 		return null;
 	}
-
-	public W minusWagon(int index) {
-		 if (placesWagon.containsKey(index))
-	        {
-	            W wagon = placesWagon.get(index);
-	            placesWagon.remove(index);
-	            return wagon;
-	        }
-		return null;
+	public boolean moreEquals(int countplace) {	
+		int FreePlace = 0;	
+		for (int i = 0; i < maxCount; i++) {	
+			if (checkFreePlace(i)) {	
+				FreePlace++;	
+			}	
+		}	
+		if(FreePlace <= countplace) {	
+			return true; 	
+		}else      	
+			return false;	
+	}	
+	public boolean lessEquals(int countplace) {	
+		int FreePlace = 0;	
+		for (int i = 0; i < maxCount; i++) {	
+			if (checkFreePlace(i)) {	
+				FreePlace++;	
+			}	
+		}	
+		if(FreePlace >= countplace) {	
+			return true; 	
+		}else      	
+			return false;	
 	}
-
 	private boolean checkFreePlace(int index)
 	{
-		   return !(places.containsKey(index));
+		return !(places.containsKey(index));
 	}
 	public void draw(Graphics g)
 	{
@@ -95,7 +85,7 @@ public class Depot<T extends ITransport, W extends IWagon> {
 		{
 			if (!checkFreePlace(i))
 			{
-				   places.get(i).DrawTrain(g);			  	
+				places.get(i).DrawTrain(g);			  	
 			}
 		}        
 	}
@@ -119,5 +109,4 @@ public class Depot<T extends ITransport, W extends IWagon> {
 			}
 		}
 	}
-
 }
