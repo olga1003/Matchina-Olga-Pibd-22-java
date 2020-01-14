@@ -19,6 +19,7 @@ public class Depot<T extends ITransport, W extends IWagon> {
 		this.pictureHeight = pictureHeight;
 		this.maxCount = sizes;
 	}
+
 	public int addTrain(T train, W wagon) {
 		if (places.size() == maxCount)
 		{
@@ -31,12 +32,11 @@ public class Depot<T extends ITransport, W extends IWagon> {
 				places.put(i, train);
 				places.get(i).SetPosition(5 + i / 5 * placeSizeWidth + 50, 
 						i % 5 * placeSizeHeight + 45, this.pictureWidth, this.pictureHeight);
-				placesWagon.put(i, wagon);
-				placesWagon.get(i).SetPosition(5 + i / 5 * placeSizeWidth + 50,
-						i % 5 * placeSizeHeight + 45);
+				placesWagon.put(i, wagon);				 
 				return i;
 			}       	
 		}
+
 		return -1;
 	}
 	public T deleteTrain(int index) {
@@ -49,29 +49,29 @@ public class Depot<T extends ITransport, W extends IWagon> {
 		}
 		return null;
 	}
-	public boolean moreEquals(int countplace) {
-		int FreePlace = 0;
-		for (int i = 0; i < maxCount; i++) {
-			if (checkFreePlace(i)) {
-				FreePlace++;
-			}
-		}
-		if(FreePlace <= countplace) {
-			return true; 
-		}else      
-			return false;
-	}
-	public boolean lessEquals(int countplace) {
-		int FreePlace = 0;
-		for (int i = 0; i < maxCount; i++) {
-			if (checkFreePlace(i)) {
-				FreePlace++;
-			}
-		}
-		if(FreePlace >= countplace) {
-			return true; 
-		}else      
-			return false;
+	public boolean moreEquals(int countplace) {	
+		int FreePlace = 0;	
+		for (int i = 0; i < maxCount; i++) {	
+			if (checkFreePlace(i)) {	
+				FreePlace++;	
+			}	
+		}	
+		if(FreePlace <= countplace) {	
+			return true; 	
+		}else      	
+			return false;	
+	}	
+	public boolean lessEquals(int countplace) {	
+		int FreePlace = 0;	
+		for (int i = 0; i < maxCount; i++) {	
+			if (checkFreePlace(i)) {	
+				FreePlace++;	
+			}	
+		}	
+		if(FreePlace >= countplace) {	
+			return true; 	
+		}else      	
+			return false;	
 	}
 	private boolean checkFreePlace(int index)
 	{
@@ -84,27 +84,19 @@ public class Depot<T extends ITransport, W extends IWagon> {
 		{
 			if (!checkFreePlace(i))
 			{
-				places.get(i).DrawTrain(g);
-				if (placesWagon.containsKey(i)) {
-					placesWagon.get(i).draw(g,    placesWagon.get(i).getPositionX(),
-							placesWagon.get(i).getPositionY(), places.get(i).getMainColor());
-					places.get(i).DrawTrain(g);
-					if (placesWagon.containsKey(i)) {
-						placesWagon.get(i).draw(g,    placesWagon.get(i).getPositionX(),
-								placesWagon.get(i).getPositionY(), places.get(i).getMainColor());
-					}
-				}
-			}        
-		}
+				places.get(i).DrawTrain(g);			  	
+			}
+		}        
 	}
+
 	private void DrawMarking(Graphics g)
 	{
 		g.setColor(Color.BLACK); 
-		//ãðàíèöû ïðàêîâêè
+		//границы праковки
 		for (int i = 0; i < maxCount / 5; i++)             
-		{//îòðèñîâûâàåì, ïî 5 ìåñò íà ëèíèè
+		{//отрисовываем, по 5 мест на линии
 			for (int j = 0; j < 5; ++j)
-			{//ëèíèÿ ðàìçåòêè ìåñòà
+			{//линия рамзетки места
 				g.drawLine(i * placeSizeWidth, j * placeSizeHeight+100,
 						i * placeSizeWidth + 1000, j * placeSizeHeight+100);
 				g.drawLine(i * placeSizeWidth, j * placeSizeHeight+110,
