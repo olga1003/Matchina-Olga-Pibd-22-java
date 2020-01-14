@@ -7,7 +7,8 @@ import java.util.ArrayList;
 
 public class MultiLevelDepot {
 	ArrayList<Depot<ITransport, IWagon>> depotStages;
-	private final int countPlaces = 20;
+	private final int countPlaces = 10;
+
 	private int pictureWidth;
 	private int pictureHeight;
 	public MultiLevelDepot(int countStages, int pictureWidth, int pictureHeight) {
@@ -26,14 +27,14 @@ public class MultiLevelDepot {
 		return null;
 	}
 
-	public ITransport  getTrain(int ind, int level) {
+	public ITransport  getTrain(int ind, int level) throws DepotNotFoundException {
 		if (level > -1 &&  level < depotStages.size()) {
 			ITransport transport = depotStages.get(level).deleteTrain(ind);
 			return transport;
 		}
 		return null;
 	}	
-	private void WriteToFile(String text, FileWriter fw) {
+	private void WriteToFile(String text, FileWriter fw) throws IOException {
 		try {
 			fw.write(text);
 		} catch (IOException e) {
@@ -46,7 +47,8 @@ public class MultiLevelDepot {
 		for (Depot<ITransport, IWagon> level : depotStages) {
 			WriteToFile("Level" + "\n", fw);
 			for (int i = 0; i < countPlaces; i++) {
-				ITransport train = level.getPlace(i);
+				ITransport train = null;
+				train = level.getPlace(i);
 				if (train != null) {
 					if (train.getClass().getName() == "LocoTrain") {
 						WriteToFile(i + ":LocoTrain:", fw);
@@ -62,7 +64,7 @@ public class MultiLevelDepot {
 		return true;
 	}
 
-	public boolean Load(String filename) throws IOException {
+	public boolean Load(String filename) throws Exception {
 		FileReader fr = new FileReader(filename);
 		String bufferTextFromFile = "";
 		int counter = -1;
@@ -78,7 +80,7 @@ public class MultiLevelDepot {
 			depotStages = new ArrayList<Depot<ITransport, IWagon>>(count);
 			bufferTextFromFile = "";
 		} else {
-			return false;
+			throw new Exception("Неверный формат");
 		}
 		while ((c = fr.read()) != -1) {
 			if ((char) c == '\n') {
@@ -104,8 +106,7 @@ public class MultiLevelDepot {
 		}
 		return true;
 	}
-	public boolean SaveLevel(String filename, int lvl) {
-		try {
+	public boolean  SaveLevel(String filename, int lvl) throws IOException,Exception {
 			if ((lvl > depotStages.size()) || (lvl < 0)) {
 				return false;
 			}
@@ -124,14 +125,11 @@ public class MultiLevelDepot {
 					WriteToFile(train.toString() + "\n", fw);
 				}
 			}
-			fw.flush();
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
+		fw.flush();
 		return true;
 	}
 
-	public boolean LoadLevel(String filename) throws IOException {
+	public boolean LoadLevel(String filename)throws IOException, DepotOccupiedPlaceException {
 		FileReader fr = new FileReader(filename);
 		String bufferTextFromFile = "";
 		int lvl = 0;

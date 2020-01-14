@@ -15,13 +15,15 @@ import javax.swing.border.LineBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
-
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.Random;
+import java.util.logging.FileHandler;
+import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 import java.awt.event.ActionEvent;
 import javax.swing.JPanel;
 
@@ -43,6 +45,8 @@ public class FormDepot {
 	static int choiceOperator = 0;
 	private JList<String> list;
 	int index = 0;
+	private Logger loggerInfo;
+	private Logger loggerError;
 	int selectLevel = 0;
 	private  PanelDepot panelDepot;
 	/**
@@ -73,10 +77,26 @@ public class FormDepot {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 1331, 566);
+		frame.setBounds(100, 100, 1331, 559);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
-
+		loggerInfo = Logger.getLogger("Info");
+		loggerError = Logger.getLogger("Errors");
+		try {
+			FileHandler fhInfo = new FileHandler("infoLogs.txt");
+			FileHandler fhError = new FileHandler("errorLogs.txt");
+			loggerInfo.addHandler(fhInfo);
+			loggerError.addHandler(fhError);
+			loggerInfo.setUseParentHandlers(false);
+			loggerError.setUseParentHandlers(false);
+			SimpleFormatter simpleFormatter = new SimpleFormatter();
+			fhInfo.setFormatter(simpleFormatter); 
+			fhError.setFormatter(simpleFormatter); 
+		} catch (SecurityException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		depot = new MultiLevelDepot(countLevels, panelPierWidth, panelPierHeight);
 
 		panelDepot = new PanelDepot(depot.getDepot(0));
@@ -108,11 +128,21 @@ public class FormDepot {
 					@Override
 					public void Invoke(ITransport transport) {
 						if (transport != null && list.getSelectedIndex() > -1) {
-						int place = depot.getDepot(list.getSelectedIndex()).addTrain(transport, wagon);
-							if (place > -1)
+							try {
+								int place = depot.getDepot(list.getSelectedIndex()).addTrain(transport, wagon);
+								loggerInfo.info("Добавлен поезд " + transport.toString() + " на место " + place);
 								panelDepot.repaint();
-							else
-								JOptionPane.showMessageDialog(null,"Поезд не удалось поставить");
+							}
+							catch (DepotOverflowException ex)
+			                 {
+			                     loggerError.warning(ex.getMessage());
+			                     JOptionPane.showMessageDialog(null,"Мест нет");
+			                 }
+			                 catch (Exception ex)
+			                 {
+			                     loggerError.warning(ex.getMessage());
+			                     JOptionPane.showMessageDialog(null,"Неизвестная ошибка");
+			                 }
 						}
 					}
 				});
@@ -137,19 +167,32 @@ public class FormDepot {
 		JButton btnTake = new JButton("Take");
 		btnTake.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(textFieldIndex.getText() != "") {
-					transport = depot.getTrain(list.getSelectedIndex(),Integer.parseInt(textFieldIndex.getText()));
-					if (transport != null) {
-						panelTake.clear();
-						hashSetTrain.add(transport); 
-						if (wagon != null) {
-							panelTake.drawTrain(transport, wagon);
-							hashSetWagon.add(wagon); 
-						} else {
-							panelTake.drawTrain(transport, wagon);
+				if (list.getSelectedIndex() > -1) {
+					if (textFieldIndex.getText() != "") {
+						try {
+							ITransport train = depot.getDepot(list.getSelectedIndex()).deleteTrain(Integer.parseInt(textFieldIndex.getText()));
+							train.SetPosition(panelTake.getWidth() / 2 - 200, panelTake.getHeight() / 2, panelTake.getWidth(),
+									panelTake.getHeight());
+							panelTake.Set(train);
+							hashSetTrain.add(train);
+							panelTake.repaint();
+							panelDepot.repaint();
+							loggerInfo.info("Взяли поезд с места " + textFieldIndex.getText());
 						}
-						storageIndex++;
-						panelTake.transport.SetPosition(30, 50, panelPierWidth, panelPierHeight);
+						catch (DepotNotFoundException ex)
+						{
+							panelTake.Set(null);
+							panelTake.validate();
+							panelTake.repaint();
+							panelDepot.repaint();
+							JOptionPane.showMessageDialog(null,"Не найдено");
+							loggerError.warning(ex.getMessage().toString());
+						}
+						catch (Exception ex)
+						{
+							JOptionPane.showMessageDialog(null,"Не известная ошибка");
+							loggerError.warning(ex.getMessage().toString());
+						}
 						panelDepot.repaint();
 						panelTake.repaint();
 					}
@@ -168,17 +211,20 @@ public class FormDepot {
 		JMenuItem mntmSaveAll = new JMenuItem("Save");
 		mntmSaveAll.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JFileChooser filechooser = new JFileChooser();
-				FileNameExtensionFilter filter = new FileNameExtensionFilter("txt", "txt");
-				filechooser.setFileFilter(filter);
-				int ret = filechooser.showDialog(null, "Save");                
-				if (ret == JFileChooser.APPROVE_OPTION) {
-				    File file = filechooser.getSelectedFile();
-				    try {
+				try {
+					JFileChooser filechooser = new JFileChooser();
+					FileNameExtensionFilter filter = new FileNameExtensionFilter("txt", "txt");
+					filechooser.setFileFilter(filter);
+					int ret = filechooser.showDialog(null, "Save");                
+					if (ret == JFileChooser.APPROVE_OPTION) {
+						File file = filechooser.getSelectedFile();
 						depot.Save(file.getAbsolutePath());
-					} catch (IOException e1) {
-						e1.printStackTrace();
+						loggerInfo.info("Сохранено");
+						JOptionPane.showMessageDialog(null,"Сохранение прошло успешно");
 					}
+				}catch (Exception ex) {
+					loggerError.warning(ex.getMessage());
+					JOptionPane.showMessageDialog(null,"Не сохранилось");
 				}
 			}
 		});
@@ -187,18 +233,23 @@ public class FormDepot {
 		JMenuItem mntmLoadAll = new JMenuItem("Load");
 		mntmLoadAll.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JFileChooser filechooser = new JFileChooser();
-				FileNameExtensionFilter filter = new FileNameExtensionFilter("txt", "txt");
-				filechooser.setFileFilter(filter);
-				int ret = filechooser.showDialog(null, "Load");                
-				if (ret == JFileChooser.APPROVE_OPTION) {
-				    File file = filechooser.getSelectedFile();
-				    try {
-				    	depot.Load(file.getAbsolutePath());
-				    	panelDepot.repaint();
-					} catch (IOException e1) {
-						e1.printStackTrace();
-					}
+				try {
+					JFileChooser filechooser = new JFileChooser();
+					FileNameExtensionFilter filter = new FileNameExtensionFilter("txt", "txt");
+					filechooser.setFileFilter(filter);
+					int ret = filechooser.showDialog(null, "Load");                
+					if (ret == JFileChooser.APPROVE_OPTION) {
+						File file = filechooser.getSelectedFile();
+						depot.Load(file.getAbsolutePath());
+						loggerInfo.info("Загружено");
+						panelDepot.repaint();
+					} 
+				} catch (DepotOccupiedPlaceException ex) {
+					loggerError.warning(ex.getMessage().toString());
+					JOptionPane.showMessageDialog(null,"Занятое место");
+				} catch (Exception ex) {
+					loggerError.warning(ex.getMessage());
+					JOptionPane.showMessageDialog(null,"Неизвестная ошибка при сохранении");
 				}
 			}
 		});
@@ -210,14 +261,21 @@ public class FormDepot {
 		JMenuItem mntmSaveLevel = new JMenuItem("Save");
 		mntmSaveLevel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JFileChooser filechooser = new JFileChooser();
-				FileNameExtensionFilter filter = new FileNameExtensionFilter("lvl", "lvl");
-				filechooser.setFileFilter(filter);
-				int ret = filechooser.showDialog(null, "Save");                
-				if (ret == JFileChooser.APPROVE_OPTION) {
-				    File file = filechooser.getSelectedFile();
-				    depot.SaveLevel(file.getAbsolutePath(), selectLevel);
-					panelDepot.repaint();
+				try {
+					JFileChooser filechooser = new JFileChooser();
+					FileNameExtensionFilter filter = new FileNameExtensionFilter("lvl", "lvl");
+					filechooser.setFileFilter(filter);
+					int ret = filechooser.showDialog(null, "Save");                
+					if (ret == JFileChooser.APPROVE_OPTION) {
+						File file = filechooser.getSelectedFile();
+						depot.SaveLevel(file.getAbsolutePath(), selectLevel);
+						loggerInfo.info("Сохранено");
+						JOptionPane.showMessageDialog(null,"Сохранение прошло успешно");
+						panelDepot.repaint();
+					}
+				} catch (Exception ex) {
+					loggerError.warning(ex.getMessage());
+					JOptionPane.showMessageDialog(null,"Не сохранилось");
 				}
 			}
 		});
@@ -226,18 +284,23 @@ public class FormDepot {
 		JMenuItem mntmLoadLevel = new JMenuItem("Load");
 		mntmLoadLevel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JFileChooser filechooser = new JFileChooser();
-				FileNameExtensionFilter filter = new FileNameExtensionFilter("lvl", "lvl");
-				filechooser.setFileFilter(filter);
-				int ret = filechooser.showDialog(null, "Load");                
-				if (ret == JFileChooser.APPROVE_OPTION) {
-				    File file = filechooser.getSelectedFile();
-				    try {
+				try {
+					JFileChooser filechooser = new JFileChooser();
+					FileNameExtensionFilter filter = new FileNameExtensionFilter("lvl", "lvl");
+					filechooser.setFileFilter(filter);
+					int ret = filechooser.showDialog(null, "Load");                
+					if (ret == JFileChooser.APPROVE_OPTION) {
+						File file = filechooser.getSelectedFile();
 						depot.LoadLevel(file.getAbsolutePath());
-					} catch (IOException e1) {
-						e1.printStackTrace();
-					}
-					panelDepot.repaint();
+						loggerInfo.info("Загружено");
+						panelDepot.repaint();
+					}		
+				}catch (DepotOccupiedPlaceException ex) {
+					loggerError.warning(ex.getMessage().toString());
+					JOptionPane.showMessageDialog(null,"Занятое место");
+				}catch (Exception ex) {
+					loggerError.warning(ex.getMessage());
+					JOptionPane.showMessageDialog(null,"Неизвестная ошибка при сохранении");
 				}
 			}
 		});
