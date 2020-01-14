@@ -355,7 +355,7 @@ public class FormTrainConfig {
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				if (train != null  ) {
-					((LocoTrain)train).setExtraFunc(wagon);
+					((LocoTrain)train).setWagonForm(wagon);
 					panel.repaint();
 				}
 			}
