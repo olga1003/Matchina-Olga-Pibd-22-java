@@ -71,7 +71,7 @@ public class FormDepot {
 
 		panelDepot = new PanelDepot(depot.getDepot(0));
 		panelDepot.setBorder(new LineBorder(new Color(0, 0, 0)));
-		panelDepot.setBounds(10, 11, panelDepotWidth, panelDepotHeight);
+		panelDepot.setBounds(10, 11, panelDepotWidth, panelDepotHeight );
 		frame.getContentPane().add(panelDepot);
 
 		String[] levels = new String[countLevels];
