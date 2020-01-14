@@ -20,8 +20,8 @@ import javax.swing.JPanel;
 public class FormDepot {
 
 	private JFrame frame;
-	private final int panelDepotWidth = 870;
-	private final int panelDepotHeight = 460;
+	private final int panelPierWidth = 870;
+	private final int panelPierHeight = 460;
 	private ITransport locomotive;
 	private final int countLevels = 5;
 	private MultiLevelDepot depot;
@@ -67,11 +67,11 @@ public class FormDepot {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 
-		depot = new MultiLevelDepot(countLevels, panelDepotWidth, panelDepotHeight);
+		depot = new MultiLevelDepot(countLevels, panelPierWidth, panelPierHeight);
 
 		panelDepot = new PanelDepot(depot.getDepot(0));
 		panelDepot.setBorder(new LineBorder(new Color(0, 0, 0)));
-		panelDepot.setBounds(10, 11, panelDepotWidth, panelDepotHeight );
+		panelDepot.setBounds(10, 11, panelPierWidth, panelPierHeight );
 		frame.getContentPane().add(panelDepot);
 
 		String[] levels = new String[countLevels];
@@ -139,7 +139,7 @@ public class FormDepot {
 							panelTake.drawTrain(transport, wagon);
 						}
 						storageIndex++;
-						panelTake.transport.SetPosition(30, 50, panelDepotWidth, panelDepotHeight);
+						panelTake.transport.SetPosition(30, 50, panelPierWidth, panelPierHeight);
 						panelDepot.repaint();
 						panelTake.repaint();
 					}
