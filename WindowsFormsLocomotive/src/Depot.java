@@ -3,6 +3,7 @@ import java.awt.Graphics;
 import java.util.HashMap;
 import java.util.Set;
 
+
 public class Depot<T extends ITransport, W extends IWagon> {
 	private HashMap<Integer, T> places;
 	private HashMap<Integer, W> placesWagon;
@@ -19,7 +20,9 @@ public class Depot<T extends ITransport, W extends IWagon> {
 		this.pictureHeight = pictureHeight;
 		this.maxCount = sizes;
 	}
-
+	public T getPlace(int i) {
+		return places.get(i);
+	}
 	public int addTrain(T train, W wagon) {
 		if (places.size() == maxCount)
 		{
@@ -72,6 +75,15 @@ public class Depot<T extends ITransport, W extends IWagon> {
 			return true; 	
 		}else      	
 			return false;	
+	}
+	public void setPlace(int i, T value) {
+		if (checkFreePlace(i))
+		{
+			places.put(i, value);
+		//	placesWagon.put(i, (W) value.getTypeWheel());
+			places.get(i).SetPosition(5 + i / 5 * placeSizeWidth + 50, 
+					i % 5 * placeSizeHeight + 45, this.pictureWidth, this.pictureHeight);
+		}
 	}
 	private boolean checkFreePlace(int index)
 	{

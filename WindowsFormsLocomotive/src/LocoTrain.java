@@ -13,6 +13,23 @@ public class LocoTrain extends Train {
 		this.DopColor = dopColor;
 		this.wagon = wagon;
 	}
+	public LocoTrain(String save)
+	{
+		String[] mas = save.split(";");
+		if (mas.length == 3)
+		{
+			MaxSpeed = Integer.parseInt(mas[0]);
+			MainColor = new Color(Integer.parseInt(mas[1]));
+			wagon = toWagonForm(mas[2]);
+		}
+	}
+	public IWagon toWagonForm(String info) {
+
+		if (info.contains("LocomotiveWagonFormNormal")) return new LocomotiveWagonFormNormal();
+		if (info.contains("LocoWagonFormOval")) return new LocoWagonFormOval();
+		if (info.contains("LocoWagonFormDoubleOval")) return new LocoWagonFormDoubleOval();
+		return new LocomotiveWagonFormNormal();
+	}
 	public void setWagonForm(IWagon wagon) {
 		this.wagon = wagon;
 	}
@@ -76,5 +93,9 @@ public class LocoTrain extends Train {
 		g.fillOval(  _startPosX + 27, _startPosY + 50, 15, 15);
 		g.fillOval(  _startPosX + 48, _startPosY + 50, 15, 15);
 		g.fillOval(  _startPosX + 68, _startPosY + 50, 15, 15);
+	}
+	@Override
+	public String toString() {
+		 return MaxSpeed + ";" + MainColor.getRGB() + ";" + wagon.toString();
 	}
 }
