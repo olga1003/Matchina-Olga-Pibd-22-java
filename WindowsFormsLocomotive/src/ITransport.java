@@ -10,4 +10,5 @@ public interface ITransport {
 	int getStartPosX();
 	int getStartPosY();
 	void SetColor(Color color);
+	String toString();
 }

@@ -1,6 +1,5 @@
 import java.awt.Color;
 import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
@@ -9,12 +8,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.Random;
-
 import javax.swing.SwingConstants;
 import javax.swing.border.BevelBorder;
-
-
 import javax.swing.JButton;
 import javax.swing.border.LineBorder;
 
@@ -354,7 +349,7 @@ public class FormTrainConfig {
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				if (train != null  ) {
-					((LocoTrain)train).setExtraFunc(wagon);
+					((LocoTrain)train).setWagonForm(wagon);
 					panel.repaint();
 				}
 			}

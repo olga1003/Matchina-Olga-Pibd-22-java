@@ -5,4 +5,5 @@ public interface IWagon {
 	void SetPosition(int x, int y);
 	public int getPositionX();
 	public int getPositionY();
+	public String toString();
 }

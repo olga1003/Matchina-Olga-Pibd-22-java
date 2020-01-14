@@ -7,7 +7,6 @@ public class TrainLocomotive extends LocoTrain {
 	public  boolean Steam; { Set get;}
 	public  boolean Coal; { Set get;}
 	private Number number;
-	IWagon wagon;
 	public TrainLocomotive(int maxSpeed, int weight,Number number, Color mainColor, Color dopColor, IWagon wagon,
 			boolean steam, boolean coal) {
 		super(maxSpeed, weight,wagon, mainColor, dopColor);
@@ -15,6 +14,25 @@ public class TrainLocomotive extends LocoTrain {
 		this.Steam = steam;
 		this.Coal = coal;
 		this.number = number;
+	}
+	public TrainLocomotive(String save)
+	{
+		super(save);
+		String[] mas = save.split(";");
+		if (mas.length == 6)
+		{
+			MaxSpeed = Integer.parseInt(mas[0]);
+			MainColor = new Color(Integer.parseInt(mas[1]));
+			wagon = toWagonForm(mas[2]);
+			DopColor = new Color(Integer.parseInt(mas[3]));
+			Coal = Boolean.parseBoolean(mas[4]);
+			Steam = Boolean.parseBoolean(mas[5]);
+		}
+	}
+	@Override
+	public String toString()
+	{
+		return super.toString() + ";" + DopColor.getRGB()+ ";" + Coal + ";" + Steam;
 	}
 	public void setWagon(IWagon wagon) {
 		wagon = wagon;

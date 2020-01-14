@@ -7,7 +7,7 @@ import javax.swing.border.BevelBorder;
 import java.awt.Color;
 
 public class FormLocomotive {
-	private JFrame frame;
+	/*private JFrame frame;
 	private ITransport locomotive;
 	private JPanelLocomotive panel;
 	private JButton start;
@@ -111,5 +111,5 @@ public class FormLocomotive {
 		});
 		ButtonCreateLocoTrain.setBounds(588, 284, 144, 25);
 		frame.getContentPane().add(ButtonCreateLocoTrain);
-	}
+	}*/
 }

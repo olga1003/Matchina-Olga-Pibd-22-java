@@ -2,15 +2,23 @@ import java.awt.Color;
 import java.awt.EventQueue;
 import javax.swing.JButton;
 import javax.swing.JColorChooser;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.filechooser.FileNameExtensionFilter;
+
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.Random;
@@ -35,6 +43,7 @@ public class FormDepot {
 	static int choiceOperator = 0;
 	private JList<String> list;
 	int index = 0;
+	int selectLevel = 0;
 	private  PanelDepot panelDepot;
 	/**
 	 * Launch the application.
@@ -64,7 +73,7 @@ public class FormDepot {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 1331, 535);
+		frame.setBounds(100, 100, 1331, 566);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 
@@ -72,7 +81,7 @@ public class FormDepot {
 
 		panelDepot = new PanelDepot(depot.getDepot(0));
 		panelDepot.setBorder(new LineBorder(new Color(0, 0, 0)));
-		panelDepot.setBounds(10, 11, panelPierWidth, panelPierHeight);
+		panelDepot.setBounds(10, 11, 870, 475);
 		frame.getContentPane().add(panelDepot);
 
 		String[] levels = new String[countLevels];
@@ -149,6 +158,90 @@ public class FormDepot {
 		});
 		btnTake.setBounds(1045, 219, 97, 25);
 		frame.getContentPane().add(btnTake);	
+		
+		JMenuBar menuBar = new JMenuBar();
+		frame.setJMenuBar(menuBar);
+		
+		JMenu mnAll = new JMenu("All");
+		menuBar.add(mnAll);
+		
+		JMenuItem mntmSaveAll = new JMenuItem("Save");
+		mntmSaveAll.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JFileChooser filechooser = new JFileChooser();
+				FileNameExtensionFilter filter = new FileNameExtensionFilter("txt", "txt");
+				filechooser.setFileFilter(filter);
+				int ret = filechooser.showDialog(null, "Save");                
+				if (ret == JFileChooser.APPROVE_OPTION) {
+				    File file = filechooser.getSelectedFile();
+				    try {
+						depot.Save(file.getAbsolutePath());
+					} catch (IOException e1) {
+						e1.printStackTrace();
+					}
+				}
+			}
+		});
+		mnAll.add(mntmSaveAll);
+		
+		JMenuItem mntmLoadAll = new JMenuItem("Load");
+		mntmLoadAll.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JFileChooser filechooser = new JFileChooser();
+				FileNameExtensionFilter filter = new FileNameExtensionFilter("txt", "txt");
+				filechooser.setFileFilter(filter);
+				int ret = filechooser.showDialog(null, "Load");                
+				if (ret == JFileChooser.APPROVE_OPTION) {
+				    File file = filechooser.getSelectedFile();
+				    try {
+				    	depot.Load(file.getAbsolutePath());
+				    	panelDepot.repaint();
+					} catch (IOException e1) {
+						e1.printStackTrace();
+					}
+				}
+			}
+		});
+		mnAll.add(mntmLoadAll);
+		
+		JMenu mnLevel = new JMenu("Level");
+		menuBar.add(mnLevel);
+		
+		JMenuItem mntmSaveLevel = new JMenuItem("Save");
+		mntmSaveLevel.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JFileChooser filechooser = new JFileChooser();
+				FileNameExtensionFilter filter = new FileNameExtensionFilter("lvl", "lvl");
+				filechooser.setFileFilter(filter);
+				int ret = filechooser.showDialog(null, "Save");                
+				if (ret == JFileChooser.APPROVE_OPTION) {
+				    File file = filechooser.getSelectedFile();
+				    depot.SaveLevel(file.getAbsolutePath(), selectLevel);
+					panelDepot.repaint();
+				}
+			}
+		});
+		mnLevel.add(mntmSaveLevel);
+		
+		JMenuItem mntmLoadLevel = new JMenuItem("Load");
+		mntmLoadLevel.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JFileChooser filechooser = new JFileChooser();
+				FileNameExtensionFilter filter = new FileNameExtensionFilter("lvl", "lvl");
+				filechooser.setFileFilter(filter);
+				int ret = filechooser.showDialog(null, "Load");                
+				if (ret == JFileChooser.APPROVE_OPTION) {
+				    File file = filechooser.getSelectedFile();
+				    try {
+						depot.LoadLevel(file.getAbsolutePath());
+					} catch (IOException e1) {
+						e1.printStackTrace();
+					}
+					panelDepot.repaint();
+				}
+			}
+		});
+		mnLevel.add(mntmLoadLevel);
 
 		panelTake = new TakePanel();
 		panelTake.setBorder(new LineBorder(new Color(0, 0, 0)));
