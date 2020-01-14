@@ -36,8 +36,6 @@ public class LocomotiveWagonFormNormal  implements IWagon{
 		g.setColor(Color.DARK_GRAY);
 		g.fillOval(  x + 107, y + 50, 15, 15);
 		g.fillOval(  x + 127, y + 50, 15, 15);
-		g.fillOval(  x + 147, y + 50, 15, 15);
-
-		
+		g.fillOval(  x + 147, y + 50, 15, 15);		
 	}
 }

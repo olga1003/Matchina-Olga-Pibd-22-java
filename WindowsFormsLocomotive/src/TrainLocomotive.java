@@ -1,7 +1,6 @@
 import java.awt.Color;
 import java.util.*;
 import java.awt.Graphics;
-import java.lang.Enum;
 public class TrainLocomotive extends LocoTrain {
 	public  Color DopColor; { Set get;}
 	public  boolean Steam; { Set get;}

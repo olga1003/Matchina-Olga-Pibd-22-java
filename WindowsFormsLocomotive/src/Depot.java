@@ -3,7 +3,6 @@ import java.awt.Graphics;
 import java.util.HashMap;
 import java.util.Set;
 
-
 public class Depot<T extends ITransport, W extends IWagon> {
 	private HashMap<Integer, T> places;
 	private HashMap<Integer, W> placesWagon;
