@@ -22,8 +22,18 @@ public abstract  class Train implements ITransport{
 	public Color getMainColor() {
 		return MainColor;
 	}
+	protected void setMainColor(Color mainColor) {
+		this.MainColor = mainColor;
+	}
 	public Color getDopColor() {
 		return DopColor;
+	}
+	protected void setDopColor(Color dopColor) {
+		this.DopColor = dopColor;
+	}
+	public void SetColor(Color color)
+	{
+		MainColor = color;
 	}
     public void SetPosition(int x, int y, int width, int height)
     {

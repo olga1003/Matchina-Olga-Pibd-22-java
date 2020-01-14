@@ -1,5 +1,6 @@
-import java.awt.Graphics;
 import java.awt.Color;
+import java.awt.Graphics;
+
 public interface ITransport {
 	void SetPosition(int x, int y, int width, int height);
 	void MoveTransport(Direction direction);
@@ -7,5 +8,6 @@ public interface ITransport {
 	Color getMainColor();
 	Color getDopColor();
 	int getStartPosX();
- 	int getStartPosY();
+	int getStartPosY();
+	void SetColor(Color color);
 }
