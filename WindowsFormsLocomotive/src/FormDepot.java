@@ -20,7 +20,7 @@ public class FormDepot {
 
 	private JFrame frame;
 	private final int panelDepotWidth = 870;
-	private final int panelDepotWidth = 460;
+	private final int panelDepotHeight = 460;
 	private ITransport locomotive;
 	private final int countLevels = 5;
 	private MultiLevelDepot depot;
@@ -66,7 +66,7 @@ public class FormDepot {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 
-		depot = new MultiLevelDepot(countLevels, panelDepotWidth, panelDepotWidth);
+		depot = new MultiLevelDepot(countLevels, panelDepotWidth, panelDepotHeight);
 
 		panelDepot = new PanelDepot(depot.getDepot(0));
 		panelDepot.setBorder(new LineBorder(new Color(0, 0, 0)));
@@ -171,7 +171,7 @@ public class FormDepot {
 							panelTake.drawTrain(transport, wagon);
 						}
 						storageIndex++;
-						panelTake.transport.SetPosition(30, 50, panelDepotWidth, panelDepotWidth);
+						panelTake.transport.SetPosition(30, 50, panelDepotWidth, panelDepotHeight);
 						panelDepot.repaint();
 						panelTake.repaint();
 					}
