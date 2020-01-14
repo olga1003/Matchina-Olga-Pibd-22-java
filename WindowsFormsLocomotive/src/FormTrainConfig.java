@@ -162,6 +162,7 @@ public class FormTrainConfig {
 		JButton buttonCancel = new JButton("\u041E\u0442\u043C\u0435\u043D\u0430");
 		buttonCancel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				frame.dispose();
 			}
 		});
 		buttonCancel.setFont(new Font("Times New Roman", Font.PLAIN, 20));
