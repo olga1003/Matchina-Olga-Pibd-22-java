@@ -13,7 +13,7 @@ public class LocoTrain extends Train {
 		this.DopColor = dopColor;
 		this.wagon = wagon;
 	}
-	public void setExtraFunc(IWagon wagon) {
+	public void setWagonForm(IWagon wagon) {
 		this.wagon = wagon;
 	}
 	public  void MoveTransport(Direction direction)
