@@ -2,15 +2,23 @@ import java.awt.Color;
 import java.awt.EventQueue;
 import javax.swing.JButton;
 import javax.swing.JColorChooser;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.filechooser.FileNameExtensionFilter;
+
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.Random;
@@ -35,6 +43,7 @@ public class FormDepot {
 	static int choiceOperator = 0;
 	private JList<String> list;
 	int index = 0;
+	int selectLevel = 0;
 	private  PanelDepot panelDepot;
 	/**
 	 * Launch the application.
@@ -64,7 +73,7 @@ public class FormDepot {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 1331, 620);
+		frame.setBounds(100, 100, 1331, 566);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 
@@ -81,7 +90,7 @@ public class FormDepot {
 		}
 		list = new JList(levels);
 		list.setSelectedIndex(0);
-		list.setBounds(890, 11, 162, 144);
+		list.setBounds(890, 11, 214, 186);
 		list.addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent arg0) {
 				int index = list.getSelectedIndex();
@@ -99,7 +108,7 @@ public class FormDepot {
 					@Override
 					public void Invoke(ITransport transport) {
 						if (transport != null && list.getSelectedIndex() > -1) {
-						int place = depot.getDepot(list.getSelectedIndex()).addTrain(transport, wagon);
+							int place = depot.getDepot(list.getSelectedIndex()).addTrain(transport, wagon);
 							if (place > -1)
 								panelDepot.repaint();
 							else
@@ -115,7 +124,6 @@ public class FormDepot {
 		JLabel label = new JLabel("\u0417\u0430\u0431\u0440\u0430\u0442\u044C \u043F\u043E\u0435\u0437\u0434:");
 		label.setBounds(915, 199, 122, 14);
 		frame.getContentPane().add(label);
-		
 
 		JLabel label_1 = new JLabel("\u041C\u0435\u0441\u0442\u043E:");
 		label_1.setBounds(912, 224, 48, 14);
@@ -149,7 +157,92 @@ public class FormDepot {
 			}
 		});
 		btnTake.setBounds(1045, 219, 97, 25);
-		frame.getContentPane().add(btnTake);
+		frame.getContentPane().add(btnTake);	
+
+		JMenuBar menuBar = new JMenuBar();
+		frame.setJMenuBar(menuBar);
+		JMenu mnAll = new JMenu("Файл");
+		menuBar.add(mnAll);
+		JMenuItem mntmSaveAll = new JMenuItem("Сохранить");
+		mntmSaveAll.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JFileChooser filechooser = new JFileChooser();
+				FileNameExtensionFilter filter = new FileNameExtensionFilter("txt", "txt");
+				filechooser.setFileFilter(filter);
+				int ret = filechooser.showDialog(null, "Сохранить");                
+				if (ret == JFileChooser.APPROVE_OPTION) {
+					File file = filechooser.getSelectedFile();
+					try {
+						depot.Save(file.getAbsolutePath());
+					} catch (IOException e1) {
+						e1.printStackTrace();
+					}
+				}
+			}
+		});
+		mnAll.add(mntmSaveAll);
+
+		JMenuItem mntmLoadAll = new JMenuItem("Загрузить");
+		mntmLoadAll.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JFileChooser filechooser = new JFileChooser();
+				FileNameExtensionFilter filter = new FileNameExtensionFilter("txt", "txt");
+				filechooser.setFileFilter(filter);
+				int ret = filechooser.showDialog(null, "Загрузить");                
+				if (ret == JFileChooser.APPROVE_OPTION) {
+					File file = filechooser.getSelectedFile();
+					try {
+						depot.Load(file.getAbsolutePath());
+						panelDepot.repaint();
+					} catch (IOException e1) {
+						e1.printStackTrace();
+					}
+				}
+			}
+		});
+		mnAll.add(mntmLoadAll);
+
+		JMenu mnLevel = new JMenu("Уровень");
+		menuBar.add(mnLevel);
+		JMenuItem mntmSaveLevel = new JMenuItem("Сохранить");
+		mntmSaveLevel.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JFileChooser filechooser = new JFileChooser();
+				FileNameExtensionFilter filter = new FileNameExtensionFilter("lvl", "lvl");
+				filechooser.setFileFilter(filter);
+				int ret = filechooser.showDialog(null, "Сохранить");                
+				if (ret == JFileChooser.APPROVE_OPTION) {
+					File file = filechooser.getSelectedFile();
+					try {
+						depot.SaveLevel(file.getAbsolutePath(), list.getSelectedIndex());
+					} catch (IOException e1) {
+						e1.printStackTrace();
+					}
+					panelDepot.repaint();
+				}
+			}
+		});
+		mnLevel.add(mntmSaveLevel);
+
+		JMenuItem mntmLoadLevel = new JMenuItem("Загрузить");
+		mntmLoadLevel.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JFileChooser filechooser = new JFileChooser();
+				FileNameExtensionFilter filter = new FileNameExtensionFilter("lvl", "lvl");
+				filechooser.setFileFilter(filter);
+				int ret = filechooser.showDialog(null, "Загрузить");                
+				if (ret == JFileChooser.APPROVE_OPTION) {
+					File file = filechooser.getSelectedFile();
+					try {
+						depot.LoadLevel(file.getAbsolutePath());
+					} catch (IOException e1) {
+						e1.printStackTrace();
+					}
+					panelDepot.repaint();
+				}
+			}
+		});
+		mnLevel.add(mntmLoadLevel);
 
 		panelTake = new TakePanel();
 		panelTake.setBorder(new LineBorder(new Color(0, 0, 0)));
