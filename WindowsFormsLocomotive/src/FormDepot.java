@@ -99,7 +99,7 @@ public class FormDepot {
 			}
 		});
 		frame.getContentPane().add(list);
-		
+
 		JButton buttonCreate = new JButton("Заказать");
 		buttonCreate = new JButton("\u0417\u0430\u043A\u0430\u0437\u0430\u0442\u044C");
 		buttonCreate.addActionListener(new ActionListener() {
@@ -108,7 +108,7 @@ public class FormDepot {
 					@Override
 					public void Invoke(ITransport transport) {
 						if (transport != null && list.getSelectedIndex() > -1) {
-						int place = depot.getDepot(list.getSelectedIndex()).addTrain(transport, wagon);
+							int place = depot.getDepot(list.getSelectedIndex()).addTrain(transport, wagon);
 							if (place > -1)
 								panelDepot.repaint();
 							else
@@ -158,13 +158,11 @@ public class FormDepot {
 		});
 		btnTake.setBounds(1045, 219, 97, 25);
 		frame.getContentPane().add(btnTake);	
-		
+
 		JMenuBar menuBar = new JMenuBar();
 		frame.setJMenuBar(menuBar);
-		
 		JMenu mnAll = new JMenu("Файл");
 		menuBar.add(mnAll);
-		
 		JMenuItem mntmSaveAll = new JMenuItem("Сохранить");
 		mntmSaveAll.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -173,8 +171,8 @@ public class FormDepot {
 				filechooser.setFileFilter(filter);
 				int ret = filechooser.showDialog(null, "Сохранить");                
 				if (ret == JFileChooser.APPROVE_OPTION) {
-				    File file = filechooser.getSelectedFile();
-				    try {
+					File file = filechooser.getSelectedFile();
+					try {
 						depot.Save(file.getAbsolutePath());
 					} catch (IOException e1) {
 						e1.printStackTrace();
@@ -183,7 +181,7 @@ public class FormDepot {
 			}
 		});
 		mnAll.add(mntmSaveAll);
-		
+
 		JMenuItem mntmLoadAll = new JMenuItem("Загрузить");
 		mntmLoadAll.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -192,10 +190,10 @@ public class FormDepot {
 				filechooser.setFileFilter(filter);
 				int ret = filechooser.showDialog(null, "Загрузить");                
 				if (ret == JFileChooser.APPROVE_OPTION) {
-				    File file = filechooser.getSelectedFile();
-				    try {
-				    	depot.Load(file.getAbsolutePath());
-				    	panelDepot.repaint();
+					File file = filechooser.getSelectedFile();
+					try {
+						depot.Load(file.getAbsolutePath());
+						panelDepot.repaint();
 					} catch (IOException e1) {
 						e1.printStackTrace();
 					}
@@ -203,10 +201,9 @@ public class FormDepot {
 			}
 		});
 		mnAll.add(mntmLoadAll);
-		
+
 		JMenu mnLevel = new JMenu("Уровень");
 		menuBar.add(mnLevel);
-		
 		JMenuItem mntmSaveLevel = new JMenuItem("Сохранить");
 		mntmSaveLevel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -215,14 +212,18 @@ public class FormDepot {
 				filechooser.setFileFilter(filter);
 				int ret = filechooser.showDialog(null, "Сохранить");                
 				if (ret == JFileChooser.APPROVE_OPTION) {
-				    File file = filechooser.getSelectedFile();
-				    depot.SaveLevel(file.getAbsolutePath(), list.getSelectedIndex());
+					File file = filechooser.getSelectedFile();
+					try {
+						depot.SaveLevel(file.getAbsolutePath(), list.getSelectedIndex());
+					} catch (IOException e1) {
+						e1.printStackTrace();
+					}
 					panelDepot.repaint();
 				}
 			}
 		});
 		mnLevel.add(mntmSaveLevel);
-		
+
 		JMenuItem mntmLoadLevel = new JMenuItem("Загрузить");
 		mntmLoadLevel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -231,8 +232,8 @@ public class FormDepot {
 				filechooser.setFileFilter(filter);
 				int ret = filechooser.showDialog(null, "Загрузить");                
 				if (ret == JFileChooser.APPROVE_OPTION) {
-				    File file = filechooser.getSelectedFile();
-				    try {
+					File file = filechooser.getSelectedFile();
+					try {
 						depot.LoadLevel(file.getAbsolutePath());
 					} catch (IOException e1) {
 						e1.printStackTrace();
