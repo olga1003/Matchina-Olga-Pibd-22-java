@@ -80,7 +80,7 @@ public class MultiLevelDepot {
 			depotStages = new ArrayList<Depot<ITransport, IWagon>>(count);
 			bufferTextFromFile = "";
 		} else {
-			throw new Exception("Неверный формат");
+			throw new Exception("пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ");
 		}
 		while ((c = fr.read()) != -1) {
 			if ((char) c == '\n') {
@@ -163,9 +163,35 @@ public class MultiLevelDepot {
 				}
 				bufferTextFromFile = "";
 			} else {
-				bufferTextFromFile += (char) c;
+				return false;
 			}
+			if (depotStages.size() < lvl) {
+				return false;
+			}
+			depotStages.set(lvl, new Depot<ITransport, IWagon>(countPlaces, pictureWidth, pictureHeight));
+			while ((c = fr.read()) != -1) {
+				if ((char) c == '\n') {
+					ITransport train = null;
+					if (bufferTextFromFile == null) {
+						continue;
+					}
+					if (bufferTextFromFile.split(":").length > 2) {
+						if (bufferTextFromFile.split(":")[1].equals("LocoTrain")) {
+							train = new LocoTrain(bufferTextFromFile.split(":")[2]);
+						} else if (bufferTextFromFile.split(":")[1].equals("TrainLocomotive")) {
+							train = new TrainLocomotive(bufferTextFromFile.split(":")[2]);
+						}
+						depotStages.get(lvl).setPlace(Integer.parseInt(bufferTextFromFile.split(":")[0]), train);
+					}
+					bufferTextFromFile = "";
+				} else {
+					bufferTextFromFile += (char) c;
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
 		}
-		return true;
+		return true; 
 	}
 }
