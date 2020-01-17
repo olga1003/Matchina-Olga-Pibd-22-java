@@ -26,7 +26,7 @@ public class MultiLevelDepot {
 		return null;
 	}
 
-	public ITransport  getTrain(int ind, int level) {
+	public ITransport  getTrain(int ind, int level) throws DepotNotFoundException {
 		if (level > -1 &&  level < depotStages.size()) {
 			ITransport transport = depotStages.get(level).deleteTrain(ind);
 			return transport;
@@ -62,7 +62,7 @@ public class MultiLevelDepot {
 		return true;
 	}
 
-	public boolean Load(String filename) throws IOException {
+	public boolean Load(String filename) throws Exception {
 		FileReader fr = new FileReader(filename);
 		String bufferTextFromFile = "";
 		int counter = -1;
@@ -78,7 +78,7 @@ public class MultiLevelDepot {
 			depotStages = new ArrayList<Depot<ITransport, IWagon>>(count);
 			bufferTextFromFile = "";
 		} else {
-			return false;
+			 throw new Exception("Неверный формат файла");
 		}
 		while ((c = fr.read()) != -1) {
 			if ((char) c == '\n') {
@@ -104,8 +104,7 @@ public class MultiLevelDepot {
 		}
 		return true;
 	}
-	public boolean SaveLevel(String filename, int lvl) throws IOException{
-		try {
+	public boolean SaveLevel(String filename, int lvl) throws IOException,Exception {
 			if ((lvl > depotStages.size()) || (lvl < 0)) {
 				return false;
 			}
@@ -126,14 +125,9 @@ public class MultiLevelDepot {
 			}
 			fw.flush();
 			return true;
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			return false;
-		}
 	}
 
-	public boolean LoadLevel(String filename) throws IOException {
-		try {
+	public boolean LoadLevel(String filename)throws IOException, DepotOccupiedPlaceException {
 			FileReader fr = new FileReader(filename);
 			String bufferTextFromFile = "";
 			int lvl = 0;
@@ -170,10 +164,6 @@ public class MultiLevelDepot {
 					bufferTextFromFile += (char) c;
 				}
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			return false;
-		}
 		return true; 
 	}
 }

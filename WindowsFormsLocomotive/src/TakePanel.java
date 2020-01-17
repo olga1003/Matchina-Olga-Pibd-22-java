@@ -14,6 +14,9 @@ import java.awt.Graphics;
 		transport = null;
 		wagon = null;
 	}
+	public void Set(ITransport transport) {
+		this.transport = transport;
+	}
 	public void paint(Graphics g) {
 		super.paint(g);
 		if (transport != null) {
