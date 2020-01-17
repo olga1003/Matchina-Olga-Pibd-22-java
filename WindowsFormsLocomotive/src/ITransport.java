@@ -8,4 +8,5 @@ public interface ITransport {
 	Color getDopColor();
 	int getStartPosX();
  	int getStartPosY();
+ 	void SetColor(Color color);
 }
