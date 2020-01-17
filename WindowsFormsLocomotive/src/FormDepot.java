@@ -28,7 +28,6 @@ import java.awt.event.ActionEvent;
 import javax.swing.JPanel;
 
 public class FormDepot {
-
 	private JFrame frame;
 	private final int panelPierWidth = 870;
 	private final int panelPierHeight = 460;
@@ -303,7 +302,6 @@ public class FormDepot {
 			}
 		});
 		mnLevel.add(mntmLoadLevel);
-
 		panelTake = new TakePanel();
 		panelTake.setBorder(new LineBorder(new Color(0, 0, 0)));
 		panelTake.setBounds(891, 286, 410, 186);
