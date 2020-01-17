@@ -162,16 +162,16 @@ public class FormDepot {
 		JMenuBar menuBar = new JMenuBar();
 		frame.setJMenuBar(menuBar);
 		
-		JMenu mnAll = new JMenu("All");
+		JMenu mnAll = new JMenu("Файл");
 		menuBar.add(mnAll);
 		
-		JMenuItem mntmSaveAll = new JMenuItem("Save");
+		JMenuItem mntmSaveAll = new JMenuItem("Сохранить");
 		mntmSaveAll.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JFileChooser filechooser = new JFileChooser();
 				FileNameExtensionFilter filter = new FileNameExtensionFilter("txt", "txt");
 				filechooser.setFileFilter(filter);
-				int ret = filechooser.showDialog(null, "Save");                
+				int ret = filechooser.showDialog(null, "Сохранить");                
 				if (ret == JFileChooser.APPROVE_OPTION) {
 				    File file = filechooser.getSelectedFile();
 				    try {
@@ -184,13 +184,13 @@ public class FormDepot {
 		});
 		mnAll.add(mntmSaveAll);
 		
-		JMenuItem mntmLoadAll = new JMenuItem("Load");
+		JMenuItem mntmLoadAll = new JMenuItem("Загрузить");
 		mntmLoadAll.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JFileChooser filechooser = new JFileChooser();
 				FileNameExtensionFilter filter = new FileNameExtensionFilter("txt", "txt");
 				filechooser.setFileFilter(filter);
-				int ret = filechooser.showDialog(null, "Load");                
+				int ret = filechooser.showDialog(null, "Загрузить");                
 				if (ret == JFileChooser.APPROVE_OPTION) {
 				    File file = filechooser.getSelectedFile();
 				    try {
@@ -204,32 +204,32 @@ public class FormDepot {
 		});
 		mnAll.add(mntmLoadAll);
 		
-		JMenu mnLevel = new JMenu("Level");
+		JMenu mnLevel = new JMenu("Уровень");
 		menuBar.add(mnLevel);
 		
-		JMenuItem mntmSaveLevel = new JMenuItem("Save");
+		JMenuItem mntmSaveLevel = new JMenuItem("Сохранить");
 		mntmSaveLevel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JFileChooser filechooser = new JFileChooser();
 				FileNameExtensionFilter filter = new FileNameExtensionFilter("lvl", "lvl");
 				filechooser.setFileFilter(filter);
-				int ret = filechooser.showDialog(null, "Save");                
+				int ret = filechooser.showDialog(null, "Сохранить");                
 				if (ret == JFileChooser.APPROVE_OPTION) {
 				    File file = filechooser.getSelectedFile();
-				    depot.SaveLevel(file.getAbsolutePath(), selectLevel);
+				    depot.SaveLevel(file.getAbsolutePath(), list.getSelectedIndex());
 					panelDepot.repaint();
 				}
 			}
 		});
 		mnLevel.add(mntmSaveLevel);
 		
-		JMenuItem mntmLoadLevel = new JMenuItem("Load");
+		JMenuItem mntmLoadLevel = new JMenuItem("Загрузить");
 		mntmLoadLevel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JFileChooser filechooser = new JFileChooser();
 				FileNameExtensionFilter filter = new FileNameExtensionFilter("lvl", "lvl");
 				filechooser.setFileFilter(filter);
-				int ret = filechooser.showDialog(null, "Load");                
+				int ret = filechooser.showDialog(null, "Загрузить");                
 				if (ret == JFileChooser.APPROVE_OPTION) {
 				    File file = filechooser.getSelectedFile();
 				    try {

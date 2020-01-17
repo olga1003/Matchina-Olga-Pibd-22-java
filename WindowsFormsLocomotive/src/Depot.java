@@ -80,7 +80,6 @@ public class Depot<T extends ITransport, W extends IWagon> {
 		if (checkFreePlace(i))
 		{
 			places.put(i, value);
-		//	placesWagon.put(i, (W) value.getTypeWheel());
 			places.get(i).SetPosition(5 + i / 5 * placeSizeWidth + 50, 
 					i % 5 * placeSizeHeight + 45, this.pictureWidth, this.pictureHeight);
 		}
