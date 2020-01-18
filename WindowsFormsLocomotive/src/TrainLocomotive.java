@@ -59,4 +59,41 @@ public class TrainLocomotive extends LocoTrain {
 		}
 		super.DrawTrain(g);   
 	}
+	@Override
+	public int hashCode() {
+		return super.hashCode();
+	}
+
+	public boolean equals(TrainLocomotive other) {
+		if (Steam != other.Steam)
+			return false;
+		if (Coal != other.Coal)
+			return false;
+		if (!MainColor.equals(other.MainColor))
+			return false;
+		if (!DopColor.equals(other.DopColor))
+			return false;
+		return true;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		return equals((TrainLocomotive)obj);
+	}
+
+	public int compareTo(TrainLocomotive other) {
+		if (other == null)
+			return 1;
+        if (!DopColor.equals(other.DopColor))
+        	return Integer.compare(DopColor.getRGB(), other.DopColor.getRGB());
+        if (Coal != other.Coal)
+        	return Boolean.compare(Coal, other.Coal);
+        if (Steam != other.Steam)
+        	return Boolean.compare(Steam, other.Steam);
+        return 0;
+	}
 }

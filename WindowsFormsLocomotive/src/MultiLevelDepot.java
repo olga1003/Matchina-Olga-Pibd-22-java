@@ -4,6 +4,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class MultiLevelDepot {
 	ArrayList<Depot<ITransport, IWagon>> depotStages;
@@ -78,7 +79,7 @@ public class MultiLevelDepot {
 			depotStages = new ArrayList<Depot<ITransport, IWagon>>(count);
 			bufferTextFromFile = "";
 		} else {
-			 throw new Exception("Неверный формат файла");
+			throw new Exception("Неверный формат файла");
 		}
 		while ((c = fr.read()) != -1) {
 			if ((char) c == '\n') {
@@ -105,65 +106,77 @@ public class MultiLevelDepot {
 		return true;
 	}
 	public boolean SaveLevel(String filename, int lvl) throws IOException,Exception {
-			if ((lvl > depotStages.size()) || (lvl < 0)) {
-				return false;
-			}
-			FileWriter fw = new FileWriter(filename);
-			WriteToFile("Level:" + lvl + "\n", fw);
-			Depot<ITransport, IWagon> level = depotStages.get(lvl);
-			for (int i = 0; i < countPlaces; i++) {
-				ITransport train = level.getPlace(i);
-				if (train != null) {
-					if (train.getClass().getName() == "LocoTrain") {
-						WriteToFile(i + ":LocoTrain:", fw);
-					}
-					if (train.getClass().getName() == "TrainLocomotive") {
-						WriteToFile(i + ":TrainLocomotive:", fw);
-					}
-					WriteToFile(train.toString() + "\n", fw);
+		if ((lvl > depotStages.size()) || (lvl < 0)) {
+			return false;
+		}
+		FileWriter fw = new FileWriter(filename);
+		WriteToFile("Level:" + lvl + "\n", fw);
+		Depot<ITransport, IWagon> level = depotStages.get(lvl);
+		for (int i = 0; i < countPlaces; i++) {
+			ITransport train = level.getPlace(i);
+			if (train != null) {
+				if (train.getClass().getName() == "LocoTrain") {
+					WriteToFile(i + ":LocoTrain:", fw);
 				}
+				if (train.getClass().getName() == "TrainLocomotive") {
+					WriteToFile(i + ":TrainLocomotive:", fw);
+				}
+				WriteToFile(train.toString() + "\n", fw);
 			}
-			fw.flush();
-			return true;
+		}
+		fw.flush();
+		return true;
 	}
 
 	public boolean LoadLevel(String filename)throws IOException, DepotOccupiedPlaceException {
-			FileReader fr = new FileReader(filename);
-			String bufferTextFromFile = "";
-			int lvl = 0;
-			int c;
-			while ((char) (c = fr.read()) != '\n') {
-				bufferTextFromFile += (char) c;
-			}
-			if (bufferTextFromFile.contains("Level")) {
-				lvl = Integer.parseInt(bufferTextFromFile.split(":")[1]);
+		FileReader fr = new FileReader(filename);
+		String bufferTextFromFile = "";
+		int lvl = 0;
+		int c;
+		while ((char) (c = fr.read()) != '\n') {
+			bufferTextFromFile += (char) c;
+		}
+		if (bufferTextFromFile.contains("Level")) {
+			lvl = Integer.parseInt(bufferTextFromFile.split(":")[1]);
+			bufferTextFromFile = "";
+		} else {
+			return false;
+		}
+		if (depotStages.size() < lvl) {
+			return false;
+		}
+		depotStages.set(lvl, new Depot<ITransport, IWagon>(countPlaces, pictureWidth, pictureHeight));
+		while ((c = fr.read()) != -1) {
+			if ((char) c == '\n') {
+				ITransport train = null;
+				if (bufferTextFromFile == null) {
+					continue;
+				}
+				if (bufferTextFromFile.split(":").length > 2) {
+					if (bufferTextFromFile.split(":")[1].equals("LocoTrain")) {
+						train = new LocoTrain(bufferTextFromFile.split(":")[2]);
+					} else if (bufferTextFromFile.split(":")[1].equals("TrainLocomotive")) {
+						train = new TrainLocomotive(bufferTextFromFile.split(":")[2]);
+					}
+					depotStages.get(lvl).setPlace(Integer.parseInt(bufferTextFromFile.split(":")[0]), train);
+				}
 				bufferTextFromFile = "";
 			} else {
-				return false;
+				bufferTextFromFile += (char) c;
 			}
-			if (depotStages.size() < lvl) {
-				return false;
-			}
-			depotStages.set(lvl, new Depot<ITransport, IWagon>(countPlaces, pictureWidth, pictureHeight));
-			while ((c = fr.read()) != -1) {
-				if ((char) c == '\n') {
-					ITransport train = null;
-					if (bufferTextFromFile == null) {
-						continue;
-					}
-					if (bufferTextFromFile.split(":").length > 2) {
-						if (bufferTextFromFile.split(":")[1].equals("LocoTrain")) {
-							train = new LocoTrain(bufferTextFromFile.split(":")[2]);
-						} else if (bufferTextFromFile.split(":")[1].equals("TrainLocomotive")) {
-							train = new TrainLocomotive(bufferTextFromFile.split(":")[2]);
-						}
-						depotStages.get(lvl).setPlace(Integer.parseInt(bufferTextFromFile.split(":")[0]), train);
-					}
-					bufferTextFromFile = "";
-				} else {
-					bufferTextFromFile += (char) c;
-				}
-			}
+		}
 		return true; 
+	}
+	public void printShipsConfig() {
+		for(Depot<ITransport, IWagon> level : depotStages)
+		{
+			for(ITransport ship : level) {
+				System.out.println(ship.toString());
+			}
+		}
+	}
+
+	public void Sort() {
+		Collections.sort(depotStages);
 	}
 }
