@@ -5,7 +5,6 @@ import java.util.Random;
 public class LocoTrain extends Train{
 	private   int locoWidth = 100;
 	private  int locoHeight = 60;
-	private int _currentIndex = -1;
 	IWagon wagon;
 	public LocoTrain(int maxSpeed, int weight, IWagon wagon, Color mainColor, Color dopColor) {
 		this.MaxSpeed = maxSpeed;
