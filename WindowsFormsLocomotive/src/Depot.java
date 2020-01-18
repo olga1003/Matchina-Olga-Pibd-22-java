@@ -12,6 +12,7 @@ public class Depot<T extends ITransport, W extends IWagon> {
 	private final int placeSizeWidth = 400;
 	private final int placeSizeHeight = 80;
 	int maxCount;
+	private int curIndex;
 	public Depot(int sizes, int pictureWidth, int pictureHeight)
 	{
 		this.places =  new HashMap<>(sizes);
@@ -20,13 +21,16 @@ public class Depot<T extends ITransport, W extends IWagon> {
 		this.pictureHeight = pictureHeight;
 		this.maxCount = sizes;
 	}
-	public T getPlace(int i) {
-		return places.get(i);
+	public T getPlace(int i) throws DepotNotFoundException {
+		if (places.containsKey(i)) {
+			return places.get(i);
+		}
+		return null;
 	}
-	public int addTrain(T train, W wagon) {
+	public int addTrain(T train, W wagon) throws DepotOverflowException {
 		if (places.size() == maxCount)
 		{
-			return -1;
+			throw new	DepotOverflowException();
 		}
 		for (int i = 0; i < maxCount; i++)
 		{
@@ -39,18 +43,18 @@ public class Depot<T extends ITransport, W extends IWagon> {
 				return i;
 			}       	
 		}
-
-		return -1;
+		throw new	DepotOverflowException();
 	}
-	public T deleteTrain(int index) {
+	public T deleteTrain(int index)  throws DepotNotFoundException{
+		if (index < 0 || index > maxCount)
+			throw new DepotNotFoundException(index);
 		if (!checkFreePlace(index))
 		{
 			T train = places.get(index);
 			places.remove(index);
-			placesWagon.remove(index);
 			return train;
 		}
-		return null;
+		throw new DepotNotFoundException(index);
 	}
 	public boolean moreEquals(int countplace) {	
 		int FreePlace = 0;	
@@ -76,13 +80,14 @@ public class Depot<T extends ITransport, W extends IWagon> {
 		}else      	
 			return false;	
 	}
-	public void setPlace(int i, T value) {
+	public void setPlace(int i, T value) throws DepotOccupiedPlaceException{
 		if (checkFreePlace(i))
 		{
 			places.put(i, value);
 			places.get(i).SetPosition(5 + i / 5 * placeSizeWidth + 50, 
 					i % 5 * placeSizeHeight + 45, this.pictureWidth, this.pictureHeight);
 		}
+		else throw new DepotOccupiedPlaceException(i);
 	}
 	private boolean checkFreePlace(int index)
 	{

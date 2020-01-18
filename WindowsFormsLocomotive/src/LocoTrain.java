@@ -2,9 +2,10 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.util.Random;
 
-public class LocoTrain extends Train {
+public class LocoTrain extends Train{
 	private   int locoWidth = 100;
 	private  int locoHeight = 60;
+	private int _currentIndex = -1;
 	IWagon wagon;
 	public LocoTrain(int maxSpeed, int weight, IWagon wagon, Color mainColor, Color dopColor) {
 		this.MaxSpeed = maxSpeed;
@@ -96,6 +97,6 @@ public class LocoTrain extends Train {
 	}
 	@Override
 	public String toString() {
-		 return MaxSpeed + ";" + MainColor.getRGB() + ";" + wagon.toString();
+		return MaxSpeed + ";" + MainColor.getRGB() + ";" + wagon.toString();
 	}
 }
