@@ -1,12 +1,10 @@
 import java.awt.Color;
 import java.awt.Graphics;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Set;
 
 
-public class Depot<T extends ITransport, W extends IWagon> implements
-Comparable<Depot<T, W>>, Iterable<T>, Iterator<T> {
+public class Depot<T extends ITransport, W extends IWagon> {
 	private HashMap<Integer, T> places;
 	private HashMap<Integer, W> placesWagon;
 	private int pictureWidth;{Set get;}
@@ -29,9 +27,7 @@ Comparable<Depot<T, W>>, Iterable<T>, Iterator<T> {
 		}
 		return null;
 	}
-	public int addTrain(T train, W wagon) throws DepotOverflowException, DepotAlreadyHaveException {
-    	if((places.containsValue(train)) && (placesWagon.containsValue(wagon)))
-			throw new DepotAlreadyHaveException();
+	public int addTrain(T train, W wagon) throws DepotOverflowException {
 		if (places.size() == maxCount)
 		{
 			throw new	DepotOverflowException();
@@ -128,52 +124,4 @@ Comparable<Depot<T, W>>, Iterable<T>, Iterator<T> {
 			}
 		}
 	}
-	 public int getKey() {
-	    	return (int)places.keySet().toArray()[curIndex];
-	    }
-	    public int compareTo(Depot<T, W> other) {
-	    	if (places.size() > other.places.size()) return -1;
-	        else if (places.size() < other.places.size()) return 1;
-	        else if (places.size() > 0) {
-	        	Object[] thisKeys = places.keySet().toArray();
-	        	Object[] otherKeys = other.places.keySet().toArray();
-	            for (int i = 0; i < places.size(); ++i) {
-	                if (places.get(thisKeys[i]).getClass().getName().equals("LocoTrain") && 
-	                		other.places.get(thisKeys[i]).getClass().getName().equals("TrainLocomotive"))
-	                	return 1;
-	                if (places.get(thisKeys[i]).getClass().getName().equals("TrainLocomotive") &&
-	                		other.places.get(thisKeys[i]).getClass().getName().equals("LocoTrain"))
-	                	return -1;
-	                if (places.get(thisKeys[i]).getClass().getName().equals("LocoTrain") &&
-	                		other.places.get(thisKeys[i]).getClass().getName().equals("LocoTrain")) {
-	                	LocoTrain thisShip = (LocoTrain)places.get(thisKeys[i]);
-	                	LocoTrain otherShip = (LocoTrain)other.places.get(otherKeys[i]);
-	                    return thisShip.compareTo(otherShip);
-	                }
-	                if(places.get(thisKeys[i]).getClass().getName().equals("TrainLocomotive") &&
-	                		other.places.get(thisKeys[i]).getClass().getName().equals("TrainLocomotive")) {
-	                	TrainLocomotive thisShip = (TrainLocomotive)places.get(thisKeys[i]);
-	                	TrainLocomotive otherShip = (TrainLocomotive)other.places.get(otherKeys[i]);
-	                    return thisShip.compareTo(otherShip);
-	                }
-	            }
-	        }
-	        return 0;
-	    }
-		@Override
-		public Iterator<T> iterator() {
-			return this;
-		}
-		@Override
-		public boolean hasNext() {
-			if ((curIndex + 1) >= places.size()) {
-				curIndex = -1;
-				return false;
-			} else return true;
-		}
-		@Override
-		public T next() {
-			curIndex++;
-			return places.get(curIndex); 
-		}
 }
