@@ -41,12 +41,4 @@ public class LocomotiveWagonFormNormal  implements IWagon{
 	public String toString() {
 		return "LocomotiveWagonFormNormal";
 	}
-	@Override
-	public boolean equals(Object obj) {
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		return true;
-	}
 }
