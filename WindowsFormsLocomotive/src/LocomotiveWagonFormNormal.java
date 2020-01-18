@@ -14,7 +14,6 @@ public class LocomotiveWagonFormNormal  implements IWagon{
 		this.positionX = positionX;
 		this.positionY = positionY;
 	}
-
 	public void draw(Graphics g,  int x ,int y,Color mainColor)
 	{
 		drawWagon(g,x,y,mainColor); 	

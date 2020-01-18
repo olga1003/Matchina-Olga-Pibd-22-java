@@ -10,7 +10,6 @@ public  class LocoWagonFormOval   implements IWagon{
 	public int getPositionY() {
 		return positionY;
 	}
-
 	public void SetPosition(int positionX, int positionY) {
 		this.positionX = positionX;
 		this.positionY = positionY;
