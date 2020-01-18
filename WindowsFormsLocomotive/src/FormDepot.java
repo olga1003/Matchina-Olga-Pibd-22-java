@@ -326,7 +326,7 @@ public class FormDepot {
 		JButton buttonGetConfigs = new JButton("\u0412\u044B\u0432\u043E\u0434 \u0441\u0432\u043E\u0439\u0441\u0442\u0432");
 		buttonGetConfigs.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				depot.printShipsConfig();
+				depot.printTrainConfig();
 			}
 		});
 		buttonGetConfigs.setBounds(1137, 164, 144, 22);
