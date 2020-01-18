@@ -140,6 +140,11 @@ public class FormDepot {
 								loggerError.warning(ex.getMessage());
 								JOptionPane.showMessageDialog(null,"Мест нет");
 							}
+							catch (DepotAlreadyHaveException ex)
+							{
+								loggerError.warning(ex.getMessage());
+								JOptionPane.showMessageDialog(null,"Дублирование");
+							}
 							catch (Exception ex)
 							{
 								loggerError.warning(ex.getMessage());
@@ -306,5 +311,25 @@ public class FormDepot {
 		panelTake.setBorder(new LineBorder(new Color(0, 0, 0)));
 		panelTake.setBounds(891, 286, 410, 186);
 		frame.getContentPane().add(panelTake);
+		JButton btnSort = new JButton("\u0421\u043E\u0440\u0442\u0438\u0440\u043E\u0432\u0430\u0442\u044C");
+		btnSort.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				depot.Sort();
+				panelDepot.repaint();
+				loggerInfo.info("Сортировка");
+				JOptionPane.showMessageDialog(null,"Сортировка произошла успешно");
+			}
+		});
+		btnSort.setBounds(1137, 131, 148, 22);
+		frame.getContentPane().add(btnSort);
+
+		JButton buttonGetConfigs = new JButton("\u0412\u044B\u0432\u043E\u0434 \u0441\u0432\u043E\u0439\u0441\u0442\u0432");
+		buttonGetConfigs.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				depot.printShipsConfig();
+			}
+		});
+		buttonGetConfigs.setBounds(1137, 164, 144, 22);
+		frame.getContentPane().add(buttonGetConfigs);
 	}
 }

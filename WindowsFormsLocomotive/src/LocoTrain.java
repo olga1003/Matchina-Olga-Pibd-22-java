@@ -1,10 +1,12 @@
 import java.awt.Color;
 import java.awt.Graphics;
+import java.util.Iterator;
 import java.util.Random;
 
-public class LocoTrain extends Train{
+public class LocoTrain extends Train  implements Comparable<LocoTrain>, Iterator<String>, Iterable<String>{
 	private   int locoWidth = 100;
 	private  int locoHeight = 60;
+	private int _currentIndex = -1;
 	IWagon wagon;
 	public LocoTrain(int maxSpeed, int weight, IWagon wagon, Color mainColor, Color dopColor) {
 		this.MaxSpeed = maxSpeed;
@@ -97,5 +99,52 @@ public class LocoTrain extends Train{
 	@Override
 	public String toString() {
 		return MaxSpeed + ";" + MainColor.getRGB() + ";" + wagon.toString();
+	}
+	@Override
+	public int hashCode() {
+		return super.hashCode();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		LocoTrain other = (LocoTrain) obj;
+		if (!MainColor.equals(other.MainColor))
+			return false;
+		if (MaxSpeed != other.MaxSpeed)
+			return false; 
+		return true;
+	}
+	public int compareTo(LocoTrain other) {
+		if (other == null)
+			return 1;
+		if (MaxSpeed != other.MaxSpeed)
+			return Integer.compare(MaxSpeed, other.MaxSpeed);
+		if (MainColor != other.MainColor)
+			return Integer.compare(MainColor.getRGB(), other.MainColor.getRGB());
+		return 0;
+	}
+
+	@Override
+	public boolean hasNext() {
+		if (_currentIndex + 1 >= toString().split(";").length)
+		{
+			_currentIndex = -1;
+			return false;
+		}else
+			return true;
+	}
+
+	@Override
+	public String next() {
+		return toString().split(";")[++_currentIndex];
+	}
+
+	@Override
+	public Iterator<String> iterator() {
+		return this;
 	}
 }

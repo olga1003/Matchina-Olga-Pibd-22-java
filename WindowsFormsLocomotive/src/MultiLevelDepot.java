@@ -4,6 +4,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class MultiLevelDepot {
 	ArrayList<Depot<ITransport, IWagon>> depotStages;
@@ -165,5 +166,17 @@ public class MultiLevelDepot {
 			}
 		}
 		return true; 
+	}
+	public void printShipsConfig() {
+		for(Depot<ITransport, IWagon> level : depotStages)
+		{
+			for(ITransport ship : level) {
+				System.out.println(ship.toString());
+			}
+		}
+	}
+
+	public void Sort() {
+		Collections.sort(depotStages);
 	}
 }
